@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMC/ICT Signal Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#080c10;--bg2:#0d1218;--border:#1e2a38;--accent:#00e5ff;--accent2:#ff6b35;--green:#00c896;--red:#ff3d6b;--yellow:#ffd166;--text:#e0eaf5;--muted:#4a6070;--mono:'Space Mono',monospace;--sans:'Syne',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid var(--border);margin-bottom:20px}
+  .logo{font-family:var(--sans);font-weight:800;font-size:20px}
+  .logo em{color:var(--accent);font-style:normal}
+  .hdr-r{display:flex;align-items:center;gap:14px}
+  .sess{font-size:11px;padding:4px 10px;border-radius:2px;border:1px solid;letter-spacing:1px;text-transform:uppercase}
+  .sess.london{border-color:var(--accent);color:var(--accent)}.sess.ny{border-color:var(--yellow);color:var(--yellow)}.sess.off{border-color:var(--muted);color:var(--muted)}
+  .clock{font-size:12px;color:var(--muted)}
+  .api-bar{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+  .api-label{font-size:10px;color:var(--muted);white-space:nowrap}
+  .api-input{flex:1;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;padding:7px 12px;outline:none;transition:border-color .2s}
+  .api-input:focus{border-color:var(--accent)}.api-input.ok{border-color:var(--green)}.api-input.err{border-color:var(--red)}
+  .btn{background:transparent;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;white-space:nowrap}
+  .btn:hover{background:var(--accent);color:var(--bg)}
+  .bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11px;color:var(--muted)}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,150,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,200,150,0)}}
+  .spinner{display:none;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}.spinner.on{display:inline-block}
+  .err-box{background:rgba(255,61,107,.08);border:1px solid rgba(255,61,107,.25);color:var(--red);font-size:11px;padding:12px 16px;margin-bottom:14px;display:none;line-height:1.6}
+  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .pc{background:var(--bg2);border:1px solid var(--border);padding:20px;position:relative;overflow:hidden}
+  .pc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+  .pc.xau::after{background:linear-gradient(90deg,var(--yellow),transparent)}.pc.eur::after{background:linear-gradient(90deg,var(--accent),transparent)}
+  .ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+  .pname{font-family:var(--sans);font-weight:800;font-size:18px;letter-spacing:1px}
+  .pprice{font-size:22px;font-weight:700;letter-spacing:-1px}
+  .pchg{font-size:11px;margin-top:2px;text-align:right}.pchg.up{color:var(--green)}.pchg.dn{color:var(--red)}
+  .pmeta{font-size:9px;color:var(--muted);margin-top:6px;display:flex;gap:12px}.pmeta b{color:var(--text)}
+  .bias{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;padding:3px 8px;border-radius:2px;text-transform:uppercase;margin-top:8px}
+  .bias.bull{background:rgba(0,200,150,.15);color:var(--green);border:1px solid rgba(0,200,150,.3)}
+  .bias.bear{background:rgba(255,61,107,.15);color:var(--red);border:1px solid rgba(255,61,107,.3)}
+  .bias.neutral{background:rgba(255,209,102,.1);color:var(--yellow);border:1px solid rgba(255,209,102,.2)}
+  .stitle{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .feed{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+  .sc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;animation:si .4s ease}
+  @keyframes si{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+  .sc.buy{border-left-color:var(--green)}.sc.sell{border-left-color:var(--red)}.sc.wait{border-left-color:var(--yellow)}
+  .sdir{font-family:var(--sans);font-weight:800;font-size:13px;letter-spacing:1px;width:40px;text-align:center}
+  .sdir.buy{color:var(--green)}.sdir.sell{color:var(--red)}.sdir.wait{color:var(--yellow)}
+  .sbody{min-width:0}.stit{font-size:12px;font-weight:700;margin-bottom:4px}.sdesc{font-size:10px;color:var(--muted);line-height:1.5}
+  .slvl{font-size:9px;color:var(--muted);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}.slvl b{color:var(--text)}
+  .smeta{text-align:right;min-width:90px}.spair{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:4px}.stime{font-size:9px;color:var(--muted)}
+  .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+  .clc{background:var(--bg2);border:1px solid var(--border);padding:16px}
+  .clh{font-family:var(--sans);font-weight:600;font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .sbadge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:2px}
+  .sbadge.high{background:rgba(0,200,150,.15);color:var(--green)}.sbadge.mid{background:rgba(255,209,102,.1);color:var(--yellow)}.sbadge.low{background:rgba(255,61,107,.1);color:var(--red)}
+  .ci{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted);margin-bottom:7px;line-height:1.3}.ci.ok{color:var(--text)}
+  .cico{width:14px;height:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+  .cico.ok{background:rgba(0,200,150,.2);color:var(--green)}.cico.fail{background:rgba(255,61,107,.1);color:var(--red);border:1px solid rgba(255,61,107,.2)}
+  table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px}
+  th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:400;letter-spacing:1px;text-transform:uppercase;font-size:9px}
+  td{padding:9px 10px;border-bottom:1px solid rgba(30,42,56,.5)}
+  tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+  .zt{display:inline-block;padding:2px 6px;border-radius:2px;font-size:9px;letter-spacing:.5px;font-weight:700}
+  .zt.ob{background:rgba(0,229,255,.1);color:var(--accent)}.zt.fvg{background:rgba(255,107,53,.1);color:var(--accent2)}.zt.rb{background:rgba(255,209,102,.1);color:var(--yellow)}.zt.liq{background:rgba(255,61,107,.1);color:var(--red)}
+  .sbar{width:60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}.sfill{height:100%;border-radius:2px}
+  footer{border-top:1px solid var(--border);padding-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--muted)}
+  .disc{max-width:500px;line-height:1.5}
+  @media(max-width:640px){.pairs,.clgrid{grid-template-columns:1fr}.sc{grid-template-columns:auto 1fr}.smeta{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">SMC<em>/</em>ICT <span style="color:var(--muted);font-weight:400;font-size:14px">Signal Bot</span></div>
+  <div class="hdr-r">
+    <div class="sess" id="sess">—</div>
+    <div class="clock" id="clock">--:--:--</div>
+  </div>
+</header>
+<div class="api-bar">
+  <div class="api-label">API KEY:</div>
+  <input class="api-input" id="apiKey" type="text" value="32f05ea43cb04b6ca5c1fa1a82e6091e">
+  <button class="btn" onclick="runAnalysis()">▶ ЗАВАНТАЖИТИ</button>
+</div>
+<div class="err-box" id="errBox"></div>
+<div class="bar">
+  <div class="dot"></div>
+  <span id="lastUpd">Натисни ЗАВАНТАЖИТИ</span>
+  <button class="btn" onclick="runAnalysis()">↻ Оновити</button>
+  <div class="spinner" id="spin"></div>
+</div>
+<div class="pairs">
+  <div class="pc xau">
+    <div class="ph">
+      <div><div class="pname">XAU/USD</div><div class="bias neutral" id="xauBias">—</div></div>
+      <div><div class="pprice" id="xauP">—</div><div class="pchg" id="xauC">—</div></div>
+    </div>
+    <div class="pmeta">H:<b id="xauH">—</b> L:<b id="xauL">—</b> O:<b id="xauO">—</b></div>
+  </div>
+  <div class="pc eur">
+    <div class="ph">
+      <div><div class="pname">EUR/USD</div><div class="bias neutral" id="eurBias">—</div></div>
+      <div><div class="pprice" id="eurP">—</div><div class="pchg" id="eurC">—</div></div>
+    </div>
+    <div class="pmeta">H:<b id="eurH">—</b> L:<b id="eurL">—</b> O:<b id="eurO">—</b></div>
+  </div>
+</div>
+<div class="stitle">▸ Активні сигнали</div>
+<div class="feed" id="feed"><div style="text-align:center;padding:30px;color:var(--muted);font-size:11px">Натисни ЗАВАНТАЖИТИ</div></div>
+<div class="stitle">▸ SMC Checklist</div>
+<div class="clgrid">
+  <div class="clc"><div class="clh">XAU/USD <div class="sbadge" id="xauSc">—</div></div><div id="xauCL"></div></div>
+  <div class="clc"><div class="clh">EUR/USD <div class="sbadge" id="eurSc">—</div></div><div id="eurCL"></div></div>
+</div>
+<div class="stitle">▸ Ключові зони</div>
+<table>
+  <thead><tr><th>Пара</th><th>Тип</th><th>Рівень</th><th>TF</th><th>Статус</th><th>Сила</th></tr></thead>
+  <tbody id="zones"><tr><td colspan="6" style="color:var(--muted);padding:20px;text-align:center">—</td></tr></tbody>
+</table>
+<footer>
+  <div class="disc">⚠ Дані: Twelvedata API. Сигнали на основі SMC/ICT — не фінансова порада.</div>
+  <div>v2.2</div>
+</footer>
+</div>
+<script>
+// Clock
+function tick(){
+  const ky=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Kiev'}));
+  const h=ky.getHours(),m=ky.getMinutes(),s=ky.getSeconds();
+  const p=n=>String(n).padStart(2,'0');
+  document.getElementById('clock').textContent=p(h)+':'+p(m)+':'+p(s)+' KY';
+  const t=h*60+m,el=document.getElementById('sess');
+  if(t>=600&&t<720){el.textContent='LONDON OPEN';el.className='sess london';}
+  else if(t>=720&&t<930){el.textContent='MID SESSION';el.className='sess london';}
+  else if(t>=930&&t<1050){el.textContent='NY OPEN';el.className='sess ny';}
+  else{el.textContent='OFF SESSION';el.className='sess off';}
+}
+setInterval(tick,1000);tick();
+
+// Fetch via proxy — no AbortSignal (fixes "object cannot be cloned")
+function fetchJSON(url){
+  return fetch(url).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(function(d){
+    if(d&&d.status==='error') throw new Error(d.message||'API error');
+    return d;
+  });
+}
+
+function fetchWithProxy(url){
+  // Try direct first, then proxy
+  return fetchJSON(url).catch(function(){
+    var proxy='https://corsproxy.io/?'+encodeURIComponent(url);
+    return fetchJSON(proxy);
+  });
+}
+
+function fetchCandles(sym,interval,size,key){
+  var s=sym==='XAU'?'XAU%2FUSD':'EUR%2FUSD';
+  var url='https://api.twelvedata.com/time_series?symbol='+s+'&interval='+interval+'&outputsize='+size+'&apikey='+key;
+  return fetchWithProxy(url).then(function(d){
+    return d.values.map(function(v){return{t:v.datetime,o:+v.open,h:+v.high,l:+v.low,c:+v.close};});
+  });
+}
+
+function fetchQuote(sym,key){
+  var s=sym==='XAU'?'XAU%2FUSD':'EUR%2FUSD';
+  var url='https://api.twelvedata.com/quote?symbol='+s+'&apikey='+key;
+  return fetchWithProxy(url).then(function(d){
+    return{price:+d.close,open:+d.open,high:+d.high,low:+d.low,change:+d.percent_change};
+  });
+}
+
+// SMC
+function detFVG(cc){
+  var r=[];
+  for(var i=2;i<cc.length;i++){
+    if(cc[i].h<cc[i-2].l)r.push({type:'bull',top:cc[i-2].l,bot:cc[i].h});
+    if(cc[i].l>cc[i-2].h)r.push({type:'bear',top:cc[i].l,bot:cc[i-2].h});
+  }
+  return r.slice(0,3);
+}
+function detOB(cc){
+  var r=[];
+  for(var i=3;i<cc.length;i++){
+    if(cc[i].c<cc[i].o&&cc[i-2].c>cc[i-2].o&&(cc[i-2].c-cc[i-2].o)>(cc[i].o-cc[i].c)*1.5)
+      r.push({type:'bull',top:cc[i].o,bot:cc[i].l});
+    if(cc[i].c>cc[i].o&&cc[i-2].c<cc[i-2].o&&(cc[i-2].o-cc[i-2].c)>(cc[i].c-cc[i].o)*1.5)
+      r.push({type:'bear',top:cc[i].h,bot:cc[i].c});
+  }
+  return r.slice(0,3);
+}
+function detRB(cc){
+  var r=[];
+  for(var i=0;i<Math.min(10,cc.length);i++){
+    var c=cc[i],body=Math.abs(c.c-c.o);
+    var uw=c.h-Math.max(c.c,c.o),lw=Math.min(c.c,c.o)-c.l;
+    if(lw>body*2&&c.c>c.o)r.push({type:'bull',level:c.l});
+    if(uw>body*2&&c.c<c.o)r.push({type:'bear',level:c.h});
+  }
+  return r.slice(0,2);
+}
+function detSweep(cc){
+  if(cc.length<8)return false;
+  var pL=Math.min.apply(null,cc.slice(2,8).map(function(c){return c.l;}));
+  var pH=Math.max.apply(null,cc.slice(2,8).map(function(c){return c.h;}));
+  var last=cc[0];
+  return(last.l<pL&&last.c>pL)||(last.h>pH&&last.c<pH);
+}
+function getHTFBias(cc){
+  var cl=cc.slice(0,10).map(function(c){return c.c;});
+  return cl[0]>cl[cl.length-1]?'bull':'bear';
+}
+function analyze(c15,c1h,c4h,q,dp){
+  var fmt=function(n){return n.toFixed(dp);};
+  var bias=getHTFBias(c4h);
+  var fvg4h=detFVG(c4h),fvg15=detFVG(c15);
+  var ob15=detOB(c15),rb15=detRB(c15);
+  var sweep=detSweep(c15);
+  var choch=sweep&&((bias==='bull'&&c15[0].c>c15[1].c)||(bias==='bear'&&c15[0].c<c15[1].c));
+  var score=[fvg4h.length>0,sweep,choch,ob15.length>0,rb15.length>0,true].filter(Boolean).length;
+  var ssl=Math.min.apply(null,c15.slice(0,20).map(function(c){return c.l;}));
+  var bsl=Math.max.apply(null,c15.slice(0,20).map(function(c){return c.h;}));
+  var range=bsl-ssl;
+  var entry=ob15.length?ob15[0].top:q.price;
+  var sl=bias==='bull'?ssl-range*.05:bsl+range*.05;
+  var tp1=bias==='bull'?(fvg15.length?fvg15[0].top:q.price+range*.3):q.price-range*.3;
+  var tp2=bias==='bull'?bsl+range*.1:ssl-range*.1;
+  return{bias:bias,fvg4h:fvg4h,fvg15:fvg15,ob15:ob15,rb15:rb15,sweep:sweep,choch:choch,score:score,
+    lv:{entry:fmt(entry),sl:fmt(sl),tp1:fmt(tp1),tp2:fmt(tp2),
+        ob:ob15.length?fmt(ob15[0].top):'—',fvg:fvg15.length?fmt(fvg15[0].top):'—',
+        ssl:fmt(ssl),bsl:fmt(bsl)}};
+}
+
+function mkSignal(pair,a){
+  var t=new Date().toLocaleString('uk-UA',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit'});
+  if(a.score>=5){
+    var dir=a.bias==='bull'?'BUY':'SELL';
+    return{dir:dir,pair:pair,title:a.score===6?'🔥 Повна конфлюенція':dir+' підтверджено',
+      desc:'HTF '+(a.bias==='bull'?'бичачий':'ведмежий')+(a.sweep?' · Sweep ✓':'')+(a.choch?' · CHOCH ✓':'')+(a.ob15.length?' · OB ✓':'')+(a.rb15.length?' · RB ✓':''),
+      lv:a.lv,time:t,score:a.score};
+  }
+  if(a.score>=3)return{dir:'WAIT',pair:pair,title:'Очікування підтвердження',
+    desc:a.score+'/6 умов. Жди '+(!a.sweep?'sweep → ':'')+(!a.choch?'CHOCH на 15M':'entry OB/RB'),
+    lv:a.lv,time:t,score:a.score};
+  return{dir:'WAIT',pair:pair,title:'Немає сетапу',desc:'Недостатньо SMC умов. Пропускай.',lv:a.lv,time:t,score:a.score};
+}
+
+function sigCard(s){
+  var pc=s.pair==='XAUUSD'?'var(--yellow)':'var(--accent)';
+  var lvl=s.dir!=='WAIT'?'<div class="slvl">Entry:<b>'+s.lv.entry+'</b> SL:<b style="color:var(--red)">'+s.lv.sl+'</b> TP1:<b style="color:var(--green)">'+s.lv.tp1+'</b> TP2:<b style="color:var(--green)">'+s.lv.tp2+'</b></div>':'';
+  return'<div class="sc '+s.dir.toLowerCase()+'"><div class="sdir '+s.dir.toLowerCase()+'">'+s.dir+'</div><div class="sbody"><div class="stit">'+s.title+'</div><div class="sdesc">'+s.desc+'</div>'+lvl+'</div><div class="smeta"><div class="spair" style="color:'+pc+'">'+s.pair+'</div><div class="stime">'+s.time+' KY</div><div class="stime">'+s.score+'/6</div></div></div>';
+}
+
+function renderCL(id,sid,items,score){
+  document.getElementById(id).innerHTML=items.map(function(i){
+    return'<div class="ci '+(i.ok?'ok':'')+'"><div class="cico '+(i.ok?'ok':'fail')+'">'+(i.ok?'✓':'✗')+'</div>'+i.label+'</div>';
+  }).join('');
+  var el=document.getElementById(sid);
+  el.textContent=score+'/6';
+  el.className='sbadge '+(score>=5?'high':score>=3?'mid':'low');
+}
+
+function renderZones(xa,ea){
+  var f2=function(n){return typeof n==='string'?n:n.toFixed(2);};
+  var f5=function(n){return typeof n==='string'?n:n.toFixed(5);};
+  var rows=[];
+  xa.ob15.slice(0,2).forEach(function(z){rows.push({pair:'XAU/USD',type:'ob',lv:f2((z.top+z.bot)/2),tf:'15M',st:'Активна',str:80,col:'var(--accent)'});});
+  xa.fvg4h.slice(0,1).forEach(function(z){rows.push({pair:'XAU/USD',type:'fvg',lv:f2((z.top+z.bot)/2),tf:'4H',st:z.type==='bull'?'Bullish FVG':'Bearish FVG',str:70,col:'var(--accent2)'});});
+  xa.rb15.slice(0,1).forEach(function(z){rows.push({pair:'XAU/USD',type:'rb',lv:f2(z.level),tf:'15M',st:(z.type==='bull'?'↑ Bull':'↓ Bear')+' RB',str:88,col:'var(--yellow)'});});
+  rows.push({pair:'XAU/USD',type:'liq',lv:xa.lv.ssl,tf:'1H',st:xa.sweep?'SSL Swept ✓':'SSL — не swept',str:xa.sweep?100:20,col:'var(--red)'});
+  ea.ob15.slice(0,2).forEach(function(z){rows.push({pair:'EUR/USD',type:'ob',lv:f5((z.top+z.bot)/2),tf:'15M',st:'Активна',str:75,col:'var(--accent)'});});
+  ea.fvg4h.slice(0,1).forEach(function(z){rows.push({pair:'EUR/USD',type:'fvg',lv:f5((z.top+z.bot)/2),tf:'4H',st:z.type==='bull'?'Bullish FVG':'Bearish FVG',str:65,col:'var(--accent2)'});});
+  rows.push({pair:'EUR/USD',type:'liq',lv:ea.lv.ssl,tf:'1H',st:ea.sweep?'SSL Swept ✓':'SSL — не swept',str:ea.sweep?100:20,col:'var(--red)'});
+  document.getElementById('zones').innerHTML=rows.map(function(z){
+    return'<tr><td style="color:'+(z.pair==='XAU/USD'?'var(--yellow)':'var(--accent)')+';font-weight:700">'+z.pair+'</td><td><span class="zt '+z.type+'">'+z.type.toUpperCase()+'</span></td><td>'+z.lv+'</td><td style="color:var(--muted)">'+z.tf+'</td><td style="color:'+(z.str>60?'var(--green)':z.str>30?'var(--yellow)':'var(--muted)')+'">'+z.st+'</td><td><div class="sbar"><div class="sfill" style="width:'+z.str+'%;background:'+z.col+'"></div></div></td></tr>';
+  }).join('');
+}
+
+function showErr(m){var e=document.getElementById('errBox');e.textContent='⚠ '+m;e.style.display='block';}
+function hideErr(){document.getElementById('errBox').style.display='none';}
+
+function runAnalysis(){
+  var key=document.getElementById('apiKey').value.trim();
+  if(!key){showErr('Введи API ключ');return;}
+  hideErr();
+  document.getElementById('spin').classList.add('on');
+  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:11px">⏳ Завантаження...</div>';
+
+  Promise.all([
+    fetchCandles('XAU','15min',50,key),
+    fetchCandles('XAU','1h',30,key),
+    fetchCandles('XAU','4h',20,key),
+    fetchQuote('XAU',key),
+    fetchCandles('EUR','15min',50,key),
+    fetchCandles('EUR','1h',30,key),
+    fetchCandles('EUR','4h',20,key),
+    fetchQuote('EUR',key)
+  ]).then(function(res){
+    var x15=res[0],x1h=res[1],x4h=res[2],xq=res[3];
+    var e15=res[4],e1h=res[5],e4h=res[6],eq=res[7];
+
+    document.getElementById('apiKey').className='api-input ok';
+    document.getElementById('xauP').textContent=xq.price.toFixed(2);
+    document.getElementById('eurP').textContent=eq.price.toFixed(5);
+    document.getElementById('xauH').textContent=xq.high.toFixed(2);
+    document.getElementById('xauL').textContent=xq.low.toFixed(2);
+    document.getElementById('xauO').textContent=xq.open.toFixed(2);
+    document.getElementById('eurH').textContent=eq.high.toFixed(5);
+    document.getElementById('eurL').textContent=eq.low.toFixed(5);
+    document.getElementById('eurO').textContent=eq.open.toFixed(5);
+
+    function sc(id,v){var e=document.getElementById(id);e.textContent=(v>=0?'+':'')+v.toFixed(2)+'%';e.className='pchg '+(v>=0?'up':'dn');}
+    sc('xauC',xq.change);sc('eurC',eq.change);
+
+    var xa=analyze(x15,x1h,x4h,xq,2);
+    var ea=analyze(e15,e1h,e4h,eq,5);
+
+    function sb(id,b){var e=document.getElementById(id);e.textContent=b==='bull'?'BULLISH':b==='bear'?'BEARISH':'NEUTRAL';e.className='bias '+b;}
+    sb('xauBias',xa.bias);sb('eurBias',ea.bias);
+
+    document.getElementById('feed').innerHTML=sigCard(mkSignal('XAUUSD',xa))+sigCard(mkSignal('EURUSD',ea));
+
+    renderCL('xauCL','xauSc',[
+      {label:'HTF FVG (4H) присутня',ok:xa.fvg4h.length>0},
+      {label:'Liquidity Sweep на 15M',ok:xa.sweep},
+      {label:'CHOCH після sweep',ok:xa.choch},
+      {label:'Order Block на 15M',ok:xa.ob15.length>0},
+      {label:'Rejection Block (велике wick)',ok:xa.rb15.length>0},
+      {label:'HTF bias підтверджено (4H)',ok:true}
+    ],xa.score);
+    renderCL('eurCL','eurSc',[
+      {label:'HTF FVG (4H) присутня',ok:ea.fvg4h.length>0},
+      {label:'Liquidity Sweep на 15M',ok:ea.sweep},
+      {label:'CHOCH після sweep',ok:ea.choch},
+      {label:'Order Block на 15M',ok:ea.ob15.length>0},
+      {label:'Rejection Block (велике wick)',ok:ea.rb15.length>0},
+      {label:'HTF bias підтверджено (4H)',ok:true}
+    ],ea.score);
+
+    renderZones(xa,ea);
+
+    var now=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev'});
+    document.getElementById('lastUpd').textContent='✅ Live · Оновлено: '+now+' KY';
+    document.getElementById('spin').classList.remove('on');
+
+  }).catch(function(e){
+    document.getElementById('apiKey').className='api-input err';
+    showErr('Помилка: '+e.message);
+    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Не вдалося завантажити дані</div>';
+    document.getElementById('spin').classList.remove('on');
+  });
+}
+
+setInterval(runAnalysis, 5*60*1000);
+</script>
+</body>
+</html>
