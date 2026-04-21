@@ -2,113 +2,189 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<title>SMC Bot (Finnhub)</title>
+<title>SMC / ICT Intraday Bot (Finnhub)</title>
+
+<style>
+body{background:#080c10;color:#e0eaf5;font-family:monospace;margin:0;padding:20px}
+.wrap{max-width:900px;margin:auto}
+input,button{padding:8px}
+button{cursor:pointer}
+.feed{margin-top:20px}
+.card{background:#0d1218;border:1px solid #1e2a38;padding:15px;margin-bottom:10px}
+.buy{border-left:4px solid #00c896}
+.sell{border-left:4px solid #ff3d6b}
+.wait{border-left:4px solid #ffd166}
+</style>
 </head>
-<body style="background:#0d1117;color:white;font-family:monospace">
+<body>
 
-<h2>SMC/ICT Bot (Finnhub)</h2>
+<div class="wrap">
 
-<input id="apiKey" placeholder="Встав API ключ Finnhub" style="width:300px;padding:8px">
+<h2>SMC / ICT Bot (Finnhub)</h2>
+
+<input id="apiKey" placeholder="Встав API ключ Finnhub">
 <button onclick="runAnalysis()">АНАЛІЗ</button>
 
-<pre id="output"></pre>
+<div class="feed" id="feed">Очікування...</div>
+
+</div>
 
 <script>
-// ── FINNHUB ─────────────────────────────
 
-async function fetchFinnhubCandles(symbol, resolution, from, to, key){
+// ===== FINNHUB =====
+
+async function fetchFinnhub(symbol, res, from, to, key){
   const map = {
-    "XAU": "OANDA:XAU_USD",
-    "EUR": "OANDA:EUR_USD"
+    XAU: "OANDA:XAU_USD",
+    EUR: "OANDA:EUR_USD"
   };
 
-  const url = `https://finnhub.io/api/v1/forex/candle?symbol=${map[symbol]}&resolution=${resolution}&from=${from}&to=${to}&token=${key}`;
+  const url = `https://finnhub.io/api/v1/forex/candle?symbol=${map[symbol]}&resolution=${res}&from=${from}&to=${to}&token=${key}`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  const r = await fetch(url);
+  const d = await r.json();
 
-  if(data.s !== "ok") throw new Error("Finnhub error");
+  if(d.s !== "ok") throw new Error("Finnhub error");
 
-  return data.t.map((t,i)=>({
-    t: new Date(t*1000).toISOString(),
-    o: data.o[i],
-    h: data.h[i],
-    l: data.l[i],
-    c: data.c[i]
+  return d.t.map((t,i)=>({
+    t: t,
+    o: d.o[i],
+    h: d.h[i],
+    l: d.l[i],
+    c: d.c[i]
   })).reverse();
 }
 
-// 4H з 1H
-function build4H(candles1h){
-  const result = [];
+// ===== 4H =====
 
-  for(let i = 0; i < candles1h.length; i += 4){
-    const chunk = candles1h.slice(i, i+4);
-    if(chunk.length < 4) continue;
-
-    result.push({
-      t: chunk[0].t,
-      o: chunk[0].o,
-      h: Math.max(...chunk.map(c=>c.h)),
-      l: Math.min(...chunk.map(c=>c.l)),
-      c: chunk[chunk.length-1].c
+function build4H(c){
+  const out=[];
+  for(let i=0;i<c.length;i+=4){
+    const ch=c.slice(i,i+4);
+    if(ch.length<4) continue;
+    out.push({
+      t:ch[0].t,
+      o:ch[0].o,
+      h:Math.max(...ch.map(x=>x.h)),
+      l:Math.min(...ch.map(x=>x.l)),
+      c:ch[3].c
     });
   }
-
-  return result;
+  return out;
 }
 
-// аналіз (спрощений)
-function analyze(c1h, c4h){
-  const last = c1h[0];
-  const prev = c1h[1];
+// ===== ATR =====
 
-  if(last.c > prev.c){
-    return "BUY";
-  } else {
-    return "SELL";
+function ATR(c){
+  let sum=0;
+  for(let i=1;i<15;i++){
+    sum+=Math.abs(c[i-1].h-c[i-1].l);
   }
+  return sum/14;
 }
 
-// ── MAIN ─────────────────────────────
+// ===== BIAS =====
+
+function bias(c){
+  return c[0].c > c[5].c ? "bull":"bear";
+}
+
+// ===== SIGNAL =====
+
+function signal(a){
+  if(a.score>=5){
+    return a.bias==="bull"?"BUY":"SELL";
+  }
+  return "WAIT";
+}
+
+// ===== ANALYZE =====
+
+function analyze(c15,c1h,c4h){
+  const b1=bias(c1h);
+  const b4=bias(c4h);
+
+  const aligned = b1===b4;
+
+  const atr=ATR(c4h);
+
+  const entry=c1h[0].c;
+  const sl=b1==="bull"?entry-atr:entry+atr;
+  const tp=b1==="bull"?entry+atr*3:entry-atr*3;
+
+  let score=0;
+  if(aligned) score++;
+  if(atr>0) score++;
+  if(Math.abs(tp-entry)/Math.abs(entry-sl)>=2) score++;
+
+  return {
+    bias:b1,
+    entry:entry.toFixed(2),
+    sl:sl.toFixed(2),
+    tp:tp.toFixed(2),
+    score
+  };
+}
+
+// ===== UI =====
+
+function card(pair,res){
+  const dir=signal(res).toLowerCase();
+
+  return `
+  <div class="card ${dir}">
+    <b>${pair}</b><br>
+    Direction: ${signal(res)}<br>
+    Entry: ${res.entry}<br>
+    SL: ${res.sl}<br>
+    TP: ${res.tp}<br>
+    Score: ${res.score}
+  </div>
+  `;
+}
+
+// ===== MAIN =====
 
 async function runAnalysis(){
-  const key = document.getElementById('apiKey').value.trim();
-  const out = document.getElementById('output');
+  const key=document.getElementById("apiKey").value.trim();
+  const feed=document.getElementById("feed");
 
   if(!key){
-    out.textContent = "Введи API ключ";
+    feed.innerHTML="Введи API ключ";
     return;
   }
 
-  const now = Math.floor(Date.now()/1000);
-  const from = now - 60*60*24*5;
+  const now=Math.floor(Date.now()/1000);
+  const from=now-60*60*24*7;
 
   try{
-    out.textContent = "Завантаження...";
+    feed.innerHTML="Завантаження...";
 
     const [
-      x1h,
-      e1h
+      x15,x1h,
+      e15,e1h
     ] = await Promise.all([
-      fetchFinnhubCandles('XAU',"60",from,now,key),
-      fetchFinnhubCandles('EUR',"60",from,now,key)
+      fetchFinnhub("XAU","15",from,now,key),
+      fetchFinnhub("XAU","60",from,now,key),
+      fetchFinnhub("EUR","15",from,now,key),
+      fetchFinnhub("EUR","60",from,now,key)
     ]);
 
-    const x4h = build4H(x1h);
-    const e4h = build4H(e1h);
+    const x4h=build4H(x1h);
+    const e4h=build4H(e1h);
 
-    const xSignal = analyze(x1h, x4h);
-    const eSignal = analyze(e1h, e4h);
+    const xa=analyze(x15,x1h,x4h);
+    const ea=analyze(e15,e1h,e4h);
 
-    out.textContent =
-      "XAUUSD: " + xSignal + "\n" +
-      "EURUSD: " + eSignal;
+    feed.innerHTML =
+      card("XAUUSD",xa) +
+      card("EURUSD",ea);
 
   }catch(e){
-    out.textContent = "Помилка: " + e.message;
+    feed.innerHTML="Помилка: "+e.message;
   }
 }
+
 </script>
 
 </body>
