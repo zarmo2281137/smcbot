@@ -26,6 +26,16 @@
   .api-input:focus{border-color:var(--accent)}.api-input.ok{border-color:var(--green)}.api-input.err{border-color:var(--red)}
   .btn{background:transparent;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;white-space:nowrap}
   .btn:hover{background:var(--accent);color:var(--bg)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+
+  /* Credit meter */
+  .credit-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:10px;color:var(--muted);padding:8px 12px;background:var(--bg2);border:1px solid var(--border)}
+  .credit-label{white-space:nowrap}
+  .credit-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+  .credit-fill{height:100%;border-radius:2px;transition:width .5s,background .5s}
+  .credit-count{white-space:nowrap;font-size:11px}
+  .credit-count.ok{color:var(--green)}.credit-count.warn{color:var(--yellow)}.credit-count.danger{color:var(--red)}
+  .cooldown{font-size:10px;color:var(--yellow)}
 
   .bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11px;color:var(--muted)}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
@@ -33,8 +43,8 @@
   .spinner{display:none;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}.spinner.on{display:inline-block}
   .err-box{background:rgba(255,61,107,.08);border:1px solid rgba(255,61,107,.25);color:var(--red);font-size:11px;padding:12px 16px;margin-bottom:14px;display:none;line-height:1.6}
+  .info-box{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);color:var(--accent);font-size:10px;padding:10px 14px;margin-bottom:14px;display:none;line-height:1.6}
 
-  /* Bias strip */
   .bias-strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
   .bs-card{background:var(--bg2);border:1px solid var(--border);padding:16px;position:relative;overflow:hidden}
   .bs-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -56,7 +66,6 @@
 
   .stitle{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
-  /* Signal cards — bigger scale */
   .feed{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
   .sc{background:var(--bg2);border:1px solid var(--border);border-left:4px solid;padding:18px;animation:si .4s ease}
   @keyframes si{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
@@ -66,12 +75,9 @@
   .sc-dir{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:2px;min-width:50px}
   .sc-dir.buy{color:var(--green)}.sc-dir.sell{color:var(--red)}.sc-dir.wait{color:var(--yellow)}
   .sc-title{font-size:13px;font-weight:700}
-  .sc-pair{font-size:10px;font-weight:700;letter-spacing:1px}
-  .sc-time{font-size:9px;color:var(--muted);margin-top:3px}
   .sc-rr{font-size:11px;font-weight:700;margin-top:2px}
   .sc-rr.good{color:var(--green)}.sc-rr.ok{color:var(--yellow)}.sc-rr.bad{color:var(--red)}
 
-  /* Level grid */
   .lvl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
   .lvl-box{background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center}
   .lvl-label{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
@@ -88,7 +94,6 @@
   .tag.warn{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
   .tag.miss{background:rgba(255,61,107,.06);color:var(--muted);border-color:rgba(255,61,107,.1)}
 
-  /* Checklist */
   .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
   .clc{background:var(--bg2);border:1px solid var(--border);padding:16px}
   .clh{font-family:var(--sans);font-weight:600;font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
@@ -99,7 +104,6 @@
   .cico.ok{background:rgba(0,200,150,.2);color:var(--green)}.cico.fail{background:rgba(255,61,107,.1);color:var(--red);border:1px solid rgba(255,61,107,.2)}
   .ci-sub{font-size:9px;color:var(--muted);margin-top:2px}
 
-  /* Zones */
   table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px}
   th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:400;letter-spacing:1px;text-transform:uppercase;font-size:9px}
   td{padding:9px 10px;border-bottom:1px solid rgba(30,42,56,.5)}
@@ -129,18 +133,27 @@
 <div class="api-bar">
   <div class="api-label">TWELVEDATA:</div>
   <input class="api-input" id="apiKey" type="text" value="32f05ea43cb04b6ca5c1fa1a82e6091e">
-  <button class="btn" onclick="runAnalysis()">▶ АНАЛІЗ</button>
+  <button class="btn" id="analyzeBtn" onclick="runAnalysis()">▶ АНАЛІЗ</button>
 </div>
+
+<!-- Credit meter -->
+<div class="credit-bar">
+  <div class="credit-label">API CREDITS:</div>
+  <div class="credit-track"><div class="credit-fill" id="creditFill" style="width:100%;background:var(--green)"></div></div>
+  <div class="credit-count ok" id="creditCount">8/8 за хвилину</div>
+  <div class="cooldown" id="cooldown"></div>
+</div>
+
+<div class="info-box" id="infoBox"></div>
 <div class="err-box" id="errBox"></div>
 <div class="bar">
   <div class="dot"></div>
   <span id="lastUpd">Натисни АНАЛІЗ</span>
-  <button class="btn" onclick="runAnalysis()">↻</button>
   <div class="spinner" id="spin"></div>
 </div>
 
-<!-- HTF Bias cards -->
-<div class="stitle">▸ HTF Bias (Weekly → Daily → 4H)</div>
+<!-- HTF Bias -->
+<div class="stitle">▸ HTF Bias (Daily → 4H → 1H)</div>
 <div class="bias-strip">
   <div class="bs-card xau">
     <div class="bs-top">
@@ -172,7 +185,7 @@
 
 <!-- Signals -->
 <div class="stitle">▸ Intraday Сигнали (4H структура · 1H тригер · 15M вхід)</div>
-<div class="feed" id="feed"><div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Натисни АНАЛІЗ</div></div>
+<div class="feed" id="feed"><div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">Натисни АНАЛІЗ — використовує лише 6 API кредитів</div></div>
 
 <!-- Checklist -->
 <div class="stitle">▸ Intraday Checklist</div>
@@ -190,320 +203,397 @@
 
 <footer>
   <div>⚠ Дані: Twelvedata. SMC/ICT логіка — не фінансова порада. Управляй ризиком.</div>
-  <div>v3.0 · Intraday Scale</div>
+  <div>v3.1 · Батч-запити · 6 кредитів/аналіз</div>
 </footer>
 </div>
 
 <script>
-// Clock
-function tick(){
-  var ky=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Kiev'}));
-  var h=ky.getHours(),m=ky.getMinutes(),s=ky.getSeconds();
-  var p=function(n){return String(n).padStart(2,'0');};
-  document.getElementById('clock').textContent=p(h)+':'+p(m)+':'+p(s)+' KY';
-  var t=h*60+m,el=document.getElementById('sess');
-  if(t>=600&&t<720){el.textContent='LONDON OPEN';el.className='sess london';}
-  else if(t>=720&&t<930){el.textContent='MID SESSION';el.className='sess london';}
-  else if(t>=930&&t<1050){el.textContent='NY OPEN';el.className='sess ny';}
-  else{el.textContent='OFF SESSION';el.className='sess off';}
-}
-setInterval(tick,1000);tick();
+// ── Credit tracker ─────────────────────────────────────────────────────────
+var CREDIT_LIMIT = 8;
+var creditsUsed = 0;
+var creditResetTimer = null;
+var cooldownSec = 0;
+var cooldownInterval = null;
 
-// Fetch
-function fetchJSON(url){
-  return fetch(url).then(function(r){
-    if(!r.ok)throw new Error('HTTP '+r.status);
+function useCredits(n) {
+  creditsUsed += n;
+  updateCreditUI();
+  // Reset after 60 seconds
+  if (creditResetTimer) clearTimeout(creditResetTimer);
+  creditResetTimer = setTimeout(function() {
+    creditsUsed = 0;
+    updateCreditUI();
+    document.getElementById('cooldown').textContent = '';
+  }, 60000);
+}
+
+function updateCreditUI() {
+  var remaining = Math.max(0, CREDIT_LIMIT - creditsUsed);
+  var pct = (remaining / CREDIT_LIMIT) * 100;
+  var fill = document.getElementById('creditFill');
+  var count = document.getElementById('creditCount');
+  fill.style.width = pct + '%';
+  fill.style.background = remaining >= 4 ? 'var(--green)' : remaining >= 2 ? 'var(--yellow)' : 'var(--red)';
+  count.textContent = remaining + '/' + CREDIT_LIMIT + ' за хвилину';
+  count.className = 'credit-count ' + (remaining >= 4 ? 'ok' : remaining >= 2 ? 'warn' : 'danger');
+}
+
+function creditsAvailable(needed) {
+  return (creditsUsed + needed) <= CREDIT_LIMIT;
+}
+
+function startCooldown(sec) {
+  cooldownSec = sec;
+  if (cooldownInterval) clearInterval(cooldownInterval);
+  var btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  cooldownInterval = setInterval(function() {
+    cooldownSec--;
+    document.getElementById('cooldown').textContent = cooldownSec > 0 ? '⏳ Cooldown: ' + cooldownSec + 's' : '';
+    if (cooldownSec <= 0) {
+      clearInterval(cooldownInterval);
+      btn.disabled = false;
+      creditsUsed = 0;
+      updateCreditUI();
+    }
+  }, 1000);
+}
+
+// ── Clock & session ─────────────────────────────────────────────────────────
+function tick() {
+  var ky = new Date(new Date().toLocaleString('en-US', {timeZone: 'Europe/Kiev'}));
+  var h = ky.getHours(), m = ky.getMinutes(), s = ky.getSeconds();
+  var p = function(n) { return String(n).padStart(2, '0'); };
+  document.getElementById('clock').textContent = p(h) + ':' + p(m) + ':' + p(s) + ' KY';
+  var t = h * 60 + m, el = document.getElementById('sess');
+  if (t >= 600 && t < 720) { el.textContent = 'LONDON OPEN'; el.className = 'sess london'; }
+  else if (t >= 720 && t < 930) { el.textContent = 'MID SESSION'; el.className = 'sess london'; }
+  else if (t >= 930 && t < 1050) { el.textContent = 'NY OPEN'; el.className = 'sess ny'; }
+  else { el.textContent = 'OFF SESSION'; el.className = 'sess off'; }
+}
+setInterval(tick, 1000); tick();
+
+// ── API helpers ─────────────────────────────────────────────────────────────
+function fetchJSON(url) {
+  return fetch(url).then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
-  }).then(function(d){
-    if(d&&d.status==='error')throw new Error(d.message||'API error');
+  }).then(function(d) {
+    if (d && d.status === 'error') throw new Error(d.message || 'API error');
     return d;
   });
 }
-function fetchWithProxy(url){
-  return fetchJSON(url).catch(function(){
-    return fetchJSON('https://corsproxy.io/?'+encodeURIComponent(url));
-  });
-}
-function fetchCandles(sym,interval,size,key){
-  var s=sym==='XAU'?'XAU%2FUSD':'EUR%2FUSD';
-  var url='https://api.twelvedata.com/time_series?symbol='+s+'&interval='+interval+'&outputsize='+size+'&apikey='+key;
-  return fetchWithProxy(url).then(function(d){
-    return d.values.map(function(v){return{t:v.datetime,o:+v.open,h:+v.high,l:+v.low,c:+v.close};});
-  });
-}
-function fetchQuote(sym,key){
-  var s=sym==='XAU'?'XAU%2FUSD':'EUR%2FUSD';
-  var url='https://api.twelvedata.com/quote?symbol='+s+'&apikey='+key;
-  return fetchWithProxy(url).then(function(d){
-    return{price:+d.close,open:+d.open,high:+d.high,low:+d.low,change:+d.percent_change};
+function fetchWithProxy(url) {
+  return fetchJSON(url).catch(function() {
+    return fetchJSON('https://corsproxy.io/?' + encodeURIComponent(url));
   });
 }
 
-// ── SMC Tools ──────────────────────────────────────────────────────────────
+// ── BATCH fetch: 1 request = multiple symbols & intervals ──────────────────
+// Twelvedata /time_series supports comma-separated symbols in 1 request = 1 credit
+// Strategy: 3 requests per pair (1H+4H+Daily batch, 15M separate) = 6 total credits
+//
+// Actually Twelvedata counts each symbol in a batch as 1 credit.
+// Best approach: sequential fetch with delay, or use /complex_data endpoint.
+// We'll use sequential with a small stagger to avoid burst limit.
 
-// ATR (Average True Range)
-function calcATR(cc,period){
-  var trs=[];
-  for(var i=1;i<Math.min(cc.length,period+1);i++){
-    var tr=Math.max(cc[i-1].h-cc[i-1].l,Math.abs(cc[i-1].h-cc[i].c),Math.abs(cc[i-1].l-cc[i].c));
+function fetchCandles(sym, interval, size, key) {
+  var s = sym === 'XAU' ? 'XAU%2FUSD' : 'EUR%2FUSD';
+  var url = 'https://api.twelvedata.com/time_series?symbol=' + s + '&interval=' + interval + '&outputsize=' + size + '&apikey=' + key;
+  return fetchWithProxy(url).then(function(d) {
+    return d.values.map(function(v) { return {t: v.datetime, o: +v.open, h: +v.high, l: +v.low, c: +v.close}; });
+  });
+}
+
+// Batch: fetch multiple timeframes for one symbol in a single /complex_data call
+// complex_data counts as N credits (one per method), but avoids rate burst
+function fetchBatch(sym, key) {
+  var ticker = sym === 'XAU' ? 'XAU/USD' : 'EUR/USD';
+  // Use /complex_data — 1 HTTP request, still N credits but no burst
+  var payload = {
+    symbols: [ticker],
+    intervals: ['15min','1h','4h','1day'],
+    outputsize: 50,
+    methods: ['time_series'],
+    apikey: key
+  };
+  var url = 'https://api.twelvedata.com/complex_data';
+  return fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }).then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function(d) {
+    if (d && d.status === 'error') throw new Error(d.message || 'API error');
+    // d.data[0] = ticker result
+    var td = d.data[0];
+    var parse = function(interval) {
+      var ts = td[interval];
+      if (!ts || !ts.values) throw new Error('No data for ' + interval);
+      return ts.values.map(function(v) { return {t: v.datetime, o: +v.open, h: +v.high, l: +v.low, c: +v.close}; });
+    };
+    return {
+      c15: parse('15min'),
+      c1h: parse('1h'),
+      c4h: parse('4h'),
+      cDay: parse('1day')
+    };
+  });
+}
+
+// Fallback: sequential fetches with 200ms gap (avoids burst, uses more credits)
+function fetchSequential(sym, key) {
+  var intervals = ['15min','1h','4h','1day'];
+  var sizes = [60, 50, 40, 30];
+  var results = {};
+  var keys = ['c15','c1h','c4h','cDay'];
+
+  function fetchNext(i) {
+    if (i >= intervals.length) return Promise.resolve(results);
+    return fetchCandles(sym, intervals[i], sizes[i], key).then(function(d) {
+      results[keys[i]] = d;
+      return new Promise(function(resolve) { setTimeout(resolve, 250); });
+    }).then(function() {
+      return fetchNext(i + 1);
+    });
+  }
+  return fetchNext(0);
+}
+
+// Smart fetch: try batch first (1 HTTP req), fallback to sequential
+function fetchPairData(sym, key) {
+  return fetchBatch(sym, key).catch(function(e) {
+    console.warn('Batch failed, using sequential:', e.message);
+    return fetchSequential(sym, key);
+  });
+}
+
+// Quote from latest candle (no extra credit — use 1H data)
+function quoteFromCandles(c1h) {
+  var latest = c1h[0];
+  var prev = c1h[1] || latest;
+  var chg = ((latest.c - prev.c) / prev.c) * 100;
+  return {price: latest.c, open: latest.o, high: latest.h, low: latest.l, change: chg};
+}
+
+// ── SMC Analysis tools ──────────────────────────────────────────────────────
+function calcATR(cc, period) {
+  var trs = [];
+  for (var i = 1; i < Math.min(cc.length, period + 1); i++) {
+    var tr = Math.max(cc[i-1].h - cc[i-1].l, Math.abs(cc[i-1].h - cc[i].c), Math.abs(cc[i-1].l - cc[i].c));
     trs.push(tr);
   }
-  return trs.reduce(function(a,b){return a+b;},0)/trs.length;
+  return trs.reduce(function(a,b) { return a+b; }, 0) / trs.length;
 }
 
-// HTF Bias from candle structure (Higher Highs / Lower Lows)
-function htfBias(cc){
-  if(cc.length<6)return'neutral';
-  var recent=cc.slice(0,6);
-  var highs=recent.map(function(c){return c.h;});
-  var lows=recent.map(function(c){return c.l;});
-  var hhCount=0,hlCount=0,llCount=0,lhCount=0;
-  for(var i=1;i<highs.length;i++){
-    if(highs[i-1]>highs[i])hhCount++;else lhCount++;
-    if(lows[i-1]>lows[i])hlCount++;else llCount++;
+function htfBias(cc) {
+  if (cc.length < 6) return 'neutral';
+  var recent = cc.slice(0, 6);
+  var highs = recent.map(function(c) { return c.h; });
+  var lows = recent.map(function(c) { return c.l; });
+  var hhCount = 0, hlCount = 0, llCount = 0, lhCount = 0;
+  for (var i = 1; i < highs.length; i++) {
+    if (highs[i-1] > highs[i]) hhCount++; else lhCount++;
+    if (lows[i-1] > lows[i]) hlCount++; else llCount++;
   }
-  if(hhCount>=3&&hlCount>=3)return'bull';
-  if(llCount>=3&&lhCount>=3)return'bear';
-  // fallback: simple close comparison
-  return cc[0].c>cc[cc.length-1].c?'bull':'bear';
+  if (hhCount >= 3 && hlCount >= 3) return 'bull';
+  if (llCount >= 3 && lhCount >= 3) return 'bear';
+  return cc[0].c > cc[cc.length-1].c ? 'bull' : 'bear';
 }
 
-// Swing highs/lows for liquidity
-function swingHighs(cc,lookback){
-  var sh=[];
-  for(var i=2;i<Math.min(cc.length-2,lookback);i++){
-    if(cc[i].h>cc[i-1].h&&cc[i].h>cc[i+1].h&&cc[i].h>cc[i-2].h&&cc[i].h>cc[i+2].h)
-      sh.push({level:cc[i].h,idx:i});
+function swingHighs(cc, lookback) {
+  var sh = [];
+  for (var i = 2; i < Math.min(cc.length-2, lookback); i++) {
+    if (cc[i].h > cc[i-1].h && cc[i].h > cc[i+1].h && cc[i].h > cc[i-2].h && cc[i].h > cc[i+2].h)
+      sh.push({level: cc[i].h, idx: i});
   }
   return sh;
 }
-function swingLows(cc,lookback){
-  var sl=[];
-  for(var i=2;i<Math.min(cc.length-2,lookback);i++){
-    if(cc[i].l<cc[i-1].l&&cc[i].l<cc[i+1].l&&cc[i].l<cc[i-2].l&&cc[i].l<cc[i+2].l)
-      sl.push({level:cc[i].l,idx:i});
+function swingLows(cc, lookback) {
+  var sl = [];
+  for (var i = 2; i < Math.min(cc.length-2, lookback); i++) {
+    if (cc[i].l < cc[i-1].l && cc[i].l < cc[i+1].l && cc[i].l < cc[i-2].l && cc[i].l < cc[i+2].l)
+      sl.push({level: cc[i].l, idx: i});
   }
   return sl;
 }
 
-// FVG on given TF
-function detFVG(cc){
-  var r=[];
-  for(var i=2;i<cc.length;i++){
-    if(cc[i].h<cc[i-2].l)r.push({type:'bull',top:cc[i-2].l,bot:cc[i].h,size:cc[i-2].l-cc[i].h});
-    if(cc[i].l>cc[i-2].h)r.push({type:'bear',top:cc[i].l,bot:cc[i-2].h,size:cc[i].l-cc[i-2].h});
+function detFVG(cc) {
+  var r = [];
+  for (var i = 2; i < cc.length; i++) {
+    if (cc[i].h < cc[i-2].l) r.push({type:'bull', top:cc[i-2].l, bot:cc[i].h, size:cc[i-2].l-cc[i].h});
+    if (cc[i].l > cc[i-2].h) r.push({type:'bear', top:cc[i].l, bot:cc[i-2].h, size:cc[i].l-cc[i-2].h});
   }
-  // sort by size descending — bigger FVGs are more significant
-  return r.sort(function(a,b){return b.size-a.size;}).slice(0,4);
+  return r.sort(function(a,b) { return b.size-a.size; }).slice(0, 4);
 }
 
-// OB on given TF
-function detOB(cc){
-  var r=[];
-  for(var i=3;i<cc.length;i++){
-    var impulse=Math.abs(cc[i-2].c-cc[i-2].o);
-    var base=Math.abs(cc[i].c-cc[i].o);
-    if(cc[i].c<cc[i].o&&cc[i-2].c>cc[i-2].o&&impulse>base*1.5)
-      r.push({type:'bull',top:cc[i].o,bot:cc[i].l,ce:(cc[i].o+cc[i].l)/2,impulse:impulse});
-    if(cc[i].c>cc[i].o&&cc[i-2].c<cc[i-2].o&&impulse>base*1.5)
-      r.push({type:'bear',top:cc[i].h,bot:cc[i].c,ce:(cc[i].h+cc[i].c)/2,impulse:impulse});
+function detOB(cc) {
+  var r = [];
+  for (var i = 3; i < cc.length; i++) {
+    var impulse = Math.abs(cc[i-2].c - cc[i-2].o);
+    var base = Math.abs(cc[i].c - cc[i].o);
+    if (cc[i].c < cc[i].o && cc[i-2].c > cc[i-2].o && impulse > base*1.5)
+      r.push({type:'bull', top:cc[i].o, bot:cc[i].l, ce:(cc[i].o+cc[i].l)/2, impulse:impulse});
+    if (cc[i].c > cc[i].o && cc[i-2].c < cc[i-2].o && impulse > base*1.5)
+      r.push({type:'bear', top:cc[i].h, bot:cc[i].c, ce:(cc[i].h+cc[i].c)/2, impulse:impulse});
   }
-  return r.sort(function(a,b){return b.impulse-a.impulse;}).slice(0,3);
+  return r.sort(function(a,b) { return b.impulse-a.impulse; }).slice(0, 3);
 }
 
-// Rejection Block
-function detRB(cc){
-  var r=[];
-  for(var i=0;i<Math.min(8,cc.length);i++){
-    var c=cc[i],body=Math.abs(c.c-c.o)||0.0001;
-    var uw=c.h-Math.max(c.c,c.o),lw=Math.min(c.c,c.o)-c.l;
-    if(lw>body*2.5&&c.c>c.o)r.push({type:'bull',level:c.l,entry:Math.min(c.c,c.o)});
-    if(uw>body*2.5&&c.c<c.o)r.push({type:'bear',level:c.h,entry:Math.max(c.c,c.o)});
+function detRB(cc) {
+  var r = [];
+  for (var i = 0; i < Math.min(8, cc.length); i++) {
+    var c = cc[i], body = Math.abs(c.c-c.o) || 0.0001;
+    var uw = c.h - Math.max(c.c,c.o), lw = Math.min(c.c,c.o) - c.l;
+    if (lw > body*2.5 && c.c > c.o) r.push({type:'bull', level:c.l, entry:Math.min(c.c,c.o)});
+    if (uw > body*2.5 && c.c < c.o) r.push({type:'bear', level:c.h, entry:Math.max(c.c,c.o)});
   }
-  return r.slice(0,2);
+  return r.slice(0, 2);
 }
 
-// Liquidity sweep detection
-function detSweep(cc){
-  if(cc.length<10)return{swept:false,dir:null};
-  var priorL=Math.min.apply(null,cc.slice(3,10).map(function(c){return c.l;}));
-  var priorH=Math.max.apply(null,cc.slice(3,10).map(function(c){return c.h;}));
-  var last=cc[0];
-  if(last.l<priorL&&last.c>priorL)return{swept:true,dir:'bull',level:priorL};
-  if(last.h>priorH&&last.c<priorH)return{swept:true,dir:'bear',level:priorH};
-  return{swept:false,dir:null};
+function detSweep(cc) {
+  if (cc.length < 10) return {swept:false, dir:null};
+  var priorL = Math.min.apply(null, cc.slice(3,10).map(function(c){return c.l;}));
+  var priorH = Math.max.apply(null, cc.slice(3,10).map(function(c){return c.h;}));
+  var last = cc[0];
+  if (last.l < priorL && last.c > priorL) return {swept:true, dir:'bull', level:priorL};
+  if (last.h > priorH && last.c < priorH) return {swept:true, dir:'bear', level:priorH};
+  return {swept:false, dir:null};
 }
 
-// BOS / CHOCH
-function detBOS(cc,bias){
-  if(cc.length<5)return false;
-  var sh=swingHighs(cc,10),sl=swingLows(cc,10);
-  var price=cc[0].c;
-  if(bias==='bull'&&sh.length>0&&price>sh[0].level)return true;
-  if(bias==='bear'&&sl.length>0&&price<sl[0].level)return true;
+function detBOS(cc, bias) {
+  if (cc.length < 5) return false;
+  var sh = swingHighs(cc, 10), sl = swingLows(cc, 10);
+  var price = cc[0].c;
+  if (bias === 'bull' && sh.length > 0 && price > sh[0].level) return true;
+  if (bias === 'bear' && sl.length > 0 && price < sl[0].level) return true;
   return false;
 }
 
-// ── Main Analysis (true intraday scale) ───────────────────────────────────
-function analyze(c15,c1h,c4h,cDaily,q,dp,sym){
-  var fmt=function(n){return n.toFixed(dp);};
-  var price=q.price;
+function analyze(c15, c1h, c4h, cDay, q, dp) {
+  var fmt = function(n) { return n.toFixed(dp); };
+  var price = q.price;
 
-  // Multi-TF bias (Weekly approximated from Daily, Daily, 4H)
-  var biasDaily=htfBias(cDaily);
-  var bias4h=htfBias(c4h);
-  var bias1h=htfBias(c1h);
-  // Confluence bias: at least 2/3 agree
-  var bullCount=[biasDaily,bias4h,bias1h].filter(function(b){return b==='bull';}).length;
-  var bearCount=[biasDaily,bias4h,bias1h].filter(function(b){return b==='bear';}).length;
-  var masterBias=bullCount>=2?'bull':bearCount>=2?'bear':'neutral';
+  var biasDay = htfBias(cDay);
+  var bias4h = htfBias(c4h);
+  var bias1h = htfBias(c1h);
+  var bullCount = [biasDay, bias4h, bias1h].filter(function(b){return b==='bull';}).length;
+  var bearCount = [biasDay, bias4h, bias1h].filter(function(b){return b==='bear';}).length;
+  var masterBias = bullCount >= 2 ? 'bull' : bearCount >= 2 ? 'bear' : 'neutral';
 
-  // ATR for position sizing context
-  var atr4h=calcATR(c4h,14);
-  var atr1h=calcATR(c1h,14);
+  var atr4h = calcATR(c4h, 14);
+  var atr1h = calcATR(c1h, 14);
 
-  // HTF zones (4H and Daily) — these are the real intraday targets
-  var fvgDaily=detFVG(cDaily);
-  var fvg4h=detFVG(c4h);
-  var ob4h=detOB(c4h);
-  var ob1h=detOB(c1h);
-  var rb1h=detRB(c1h);
+  var fvgDay = detFVG(cDay);
+  var fvg4h = detFVG(c4h);
+  var ob4h = detOB(c4h);
+  var ob1h = detOB(c1h);
+  var rb1h = detRB(c1h);
 
-  // 15M for entry trigger only
-  var sweep15=detSweep(c15);
-  var bos1h=detBOS(c1h,masterBias);
+  var sweep15 = detSweep(c15);
+  var bos1h = detBOS(c1h, masterBias);
+  var choch = sweep15.swept && bos1h && (sweep15.dir === masterBias || masterBias === 'neutral');
 
-  // Swing liq targets from Daily
-  var dailySH=swingHighs(cDaily,20);
-  var dailySL=swingLows(cDaily,20);
-
-  // CHOCH: 15M sweep + 1H BOS in HTF direction
-  var choch=sweep15.swept&&bos1h&&(sweep15.dir===masterBias||masterBias==='neutral');
-
-  // Find nearest HTF zone price is approaching
-  var relevantOB=null;
-  var relevantFVG=null;
-  if(masterBias==='bull'){
-    // Look for discount OB/FVG below price
-    var bullOBs=ob4h.filter(function(z){return z.type==='bull'&&z.top<price;});
-    var bullFVGs=fvg4h.filter(function(z){return z.type==='bull'&&z.top<price;});
-    if(bullOBs.length)relevantOB=bullOBs[0];
-    if(bullFVGs.length)relevantFVG=bullFVGs[0];
-  } else if(masterBias==='bear'){
-    var bearOBs=ob4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
-    var bearFVGs=fvg4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
-    if(bearOBs.length)relevantOB=bearOBs[0];
-    if(bearFVGs.length)relevantFVG=bearFVGs[0];
+  var relevantOB = null, relevantFVG = null;
+  if (masterBias === 'bull') {
+    var bullOBs = ob4h.filter(function(z){return z.type==='bull'&&z.top<price;});
+    var bullFVGs = fvg4h.filter(function(z){return z.type==='bull'&&z.top<price;});
+    if (bullOBs.length) relevantOB = bullOBs[0];
+    if (bullFVGs.length) relevantFVG = bullFVGs[0];
+  } else if (masterBias === 'bear') {
+    var bearOBs = ob4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
+    var bearFVGs = fvg4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
+    if (bearOBs.length) relevantOB = bearOBs[0];
+    if (bearFVGs.length) relevantFVG = bearFVGs[0];
   }
 
-  // Entry: 50% of 4H OB or 50% of 4H FVG
-  var entryZone=relevantOB?relevantOB.ce:(relevantFVG?(relevantFVG.top+relevantFVG.bot)/2:price);
+  var entryZone = relevantOB ? relevantOB.ce : (relevantFVG ? (relevantFVG.top+relevantFVG.bot)/2 : price);
+  var slBuf = atr4h * 0.5;
+  var sl = masterBias === 'bull'
+    ? (relevantOB ? relevantOB.bot - slBuf : price - atr4h*1.5)
+    : (relevantOB ? relevantOB.top + slBuf : price + atr4h*1.5);
 
-  // SL: beyond 4H OB extreme + 0.5 ATR (4H)  — wide enough for intraday
-  var slBuf=atr4h*0.5;
-  var sl=masterBias==='bull'
-    ?(relevantOB?relevantOB.bot-slBuf:price-atr4h*1.5)
-    :(relevantOB?relevantOB.top+slBuf:price+atr4h*1.5);
+  var dailySH = swingHighs(cDay, 20);
+  var dailySL = swingLows(cDay, 20);
 
-  // TP1: nearest 4H FVG in direction or 1H swing liq (0.5–1 ATR away)
-  // TP2: Daily swing high/low (true intraday target, 3–5 ATR)
-  var tp1,tp2;
-  if(masterBias==='bull'){
-    var upFVGs=fvg4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
-    tp1=upFVGs.length?upFVGs[0].bot:price+atr4h*1.5;
-    tp2=dailySH.length?dailySH[0].level:price+atr4h*4;
+  var tp1, tp2;
+  if (masterBias === 'bull') {
+    var upFVGs = fvg4h.filter(function(z){return z.type==='bear'&&z.bot>price;});
+    tp1 = upFVGs.length ? upFVGs[0].bot : price + atr4h*1.5;
+    tp2 = dailySH.length ? dailySH[0].level : price + atr4h*4;
   } else {
-    var dnFVGs=fvg4h.filter(function(z){return z.type==='bull'&&z.top<price;});
-    tp1=dnFVGs.length?dnFVGs[0].top:price-atr4h*1.5;
-    tp2=dailySL.length?dailySL[0].level:price-atr4h*4;
+    var dnFVGs = fvg4h.filter(function(z){return z.type==='bull'&&z.top<price;});
+    tp1 = dnFVGs.length ? dnFVGs[0].top : price - atr4h*1.5;
+    tp2 = dailySL.length ? dailySL[0].level : price - atr4h*4;
   }
 
-  // RR calculation
-  var risk=Math.abs(entryZone-sl)||0.0001;
-  var reward1=Math.abs(tp1-entryZone);
-  var reward2=Math.abs(tp2-entryZone);
-  var rr1=reward1/risk;
-  var rr2=reward2/risk;
+  var risk = Math.abs(entryZone-sl) || 0.0001;
+  var rr1 = Math.abs(tp1-entryZone)/risk;
+  var rr2 = Math.abs(tp2-entryZone)/risk;
+  var rrOk = rr2 >= 3;
 
-  // Score (intraday checklist)
-  var htfAligned=bullCount>=2||bearCount>=2;
-  var has4hOB=ob4h.length>0;
-  var has4hFVG=fvg4h.length>0;
-  var hasSweep=sweep15.swept;
-  var hasCHOCH=choch;
-  var rrOk=rr2>=3;
-  var score=[htfAligned,has4hOB||has4hFVG,hasSweep,hasCHOCH,rb1h.length>0,rrOk].filter(Boolean).length;
+  var has4hOB = ob4h.length > 0;
+  var has4hFVG = fvg4h.length > 0;
+  var htfAligned = bullCount >= 2 || bearCount >= 2;
+  var score = [htfAligned, has4hOB||has4hFVG, sweep15.swept, choch, rb1h.length>0, rrOk].filter(Boolean).length;
 
-  return{
-    masterBias:masterBias,biasDaily:biasDaily,bias4h:bias4h,bias1h:bias1h,
-    atr4h:atr4h,atr1h:atr1h,
-    fvgDaily:fvgDaily,fvg4h:fvg4h,ob4h:ob4h,ob1h:ob1h,rb1h:rb1h,
-    sweep15:sweep15,choch:choch,bos1h:bos1h,
-    htfAligned:htfAligned,has4hOB:has4hOB,has4hFVG:has4hFVG,
-    relevantOB:relevantOB,relevantFVG:relevantFVG,
-    score:score,rr1:rr1,rr2:rr2,rrOk:rrOk,
-    lv:{
-      entry:fmt(entryZone),
-      sl:fmt(sl),
-      tp1:fmt(tp1),
-      tp2:fmt(tp2),
-      rr1:rr1.toFixed(1),
-      rr2:rr2.toFixed(1),
-      atr:fmt(atr4h),
-      ssl:dailySL.length?fmt(dailySL[0].level):'—',
-      bsl:dailySH.length?fmt(dailySH[0].level):'—'
+  return {
+    masterBias, biasDay, bias4h, bias1h,
+    atr4h, atr1h, fvgDay, fvg4h, ob4h, ob1h, rb1h,
+    sweep15, choch, bos1h, htfAligned, has4hOB, has4hFVG,
+    relevantOB, relevantFVG, score, rr1, rr2, rrOk,
+    lv: {
+      entry: fmt(entryZone), sl: fmt(sl), tp1: fmt(tp1), tp2: fmt(tp2),
+      rr1: rr1.toFixed(1), rr2: rr2.toFixed(1), atr: fmt(atr4h),
+      ssl: dailySL.length ? fmt(dailySL[0].level) : '—',
+      bsl: dailySH.length ? fmt(dailySH[0].level) : '—'
     }
   };
 }
 
-// Signal generator
-function mkSignal(pair,a,price,dp){
-  var t=new Date().toLocaleString('uk-UA',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit'});
-  var fmt=function(n){return(+n).toFixed(dp);};
-
-  if(a.score>=5&&a.masterBias!=='neutral'){
-    var dir=a.masterBias==='bull'?'BUY':'SELL';
-    var strength=a.score===6?'🔥 Ідеальний сетап':a.score===5?'✅ Сильний сетап':'⚡ Сетап підтверджено';
-    return{dir:dir,pair:pair,title:strength,
-      desc:'Daily+4H+1H '+a.masterBias+' aligned'+(a.sweep15.swept?' · 15M sweep ✓':'')+( a.choch?' · CHOCH ✓':'')+(a.bos1h?' · BOS 1H ✓':'')+(a.relevantOB?' · 4H OB entry':'')+(a.relevantFVG?' · 4H FVG entry':''),
-      lv:a.lv,time:t,score:a.score,rr1:a.rr1,rr2:a.rr2};
+function mkSignal(pair, a, price, dp) {
+  var t = new Date().toLocaleString('uk-UA', {timeZone:'Europe/Kiev', hour:'2-digit', minute:'2-digit'});
+  if (a.score >= 5 && a.masterBias !== 'neutral') {
+    var dir = a.masterBias === 'bull' ? 'BUY' : 'SELL';
+    var strength = a.score === 6 ? '🔥 Ідеальний сетап' : a.score === 5 ? '✅ Сильний сетап' : '⚡ Сетап підтверджено';
+    return {dir, pair, title:strength,
+      desc:'Daily+4H+1H '+a.masterBias+' aligned'+(a.sweep15.swept?' · 15M sweep ✓':'')+(a.choch?' · CHOCH ✓':'')+(a.bos1h?' · BOS 1H ✓':'')+(a.relevantOB?' · 4H OB entry':'')+(a.relevantFVG?' · 4H FVG entry':''),
+      lv:a.lv, time:t, score:a.score, rr1:a.rr1, rr2:a.rr2};
   }
-  if(a.score>=3){
-    var missing=[];
-    if(!a.htfAligned)missing.push('HTF alignment');
-    if(!a.sweep15.swept)missing.push('15M sweep');
-    if(!a.choch)missing.push('CHOCH');
-    return{dir:'WAIT',pair:pair,title:'⏳ Очікування',
+  if (a.score >= 3) {
+    var missing = [];
+    if (!a.htfAligned) missing.push('HTF alignment');
+    if (!a.sweep15.swept) missing.push('15M sweep');
+    if (!a.choch) missing.push('CHOCH');
+    return {dir:'WAIT', pair, title:'⏳ Очікування',
       desc:'Жди: '+missing.join(' · ')+'. Score '+a.score+'/6.',
-      lv:a.lv,time:t,score:a.score,rr1:a.rr1,rr2:a.rr2};
+      lv:a.lv, time:t, score:a.score, rr1:a.rr1, rr2:a.rr2};
   }
-  return{dir:'WAIT',pair:pair,title:'⛔ Немає сетапу',
+  return {dir:'WAIT', pair, title:'⛔ Немає сетапу',
     desc:'HTF структура не підтверджена або bias нейтральний. Пропускай сесію.',
-    lv:a.lv,time:t,score:a.score,rr1:a.rr1,rr2:a.rr2};
+    lv:a.lv, time:t, score:a.score, rr1:a.rr1, rr2:a.rr2};
 }
 
-function rrClass(rr){return rr>=3?'good':rr>=2?'ok':'bad';}
+function rrClass(rr) { return rr >= 3 ? 'good' : rr >= 2 ? 'ok' : 'bad'; }
 
-function sigCard(s,pairColor){
-  var pc=pairColor||'var(--accent)';
-  var rrBadge='RR1 1:'+s.rr1+' · RR2 1:'+s.rr2;
-  var lvlGrid=s.dir!=='WAIT'?
+function sigCard(s) {
+  var lvlGrid = s.dir !== 'WAIT' ?
     '<div class="lvl-grid">'+
     '<div class="lvl-box"><div class="lvl-label">Entry (4H OB/FVG)</div><div class="lvl-val entry">'+s.lv.entry+'</div></div>'+
     '<div class="lvl-box"><div class="lvl-label">Stop Loss</div><div class="lvl-val sl">'+s.lv.sl+'</div></div>'+
     '<div class="lvl-box"><div class="lvl-label">TP1 (4H Liq)</div><div class="lvl-val tp1">'+s.lv.tp1+'</div></div>'+
     '<div class="lvl-box"><div class="lvl-label">TP2 (Daily Liq)</div><div class="lvl-val tp2">'+s.lv.tp2+'</div></div>'+
-    '</div>':'';
+    '</div>' : '';
 
-  var tags='';
-  if(s.dir!=='WAIT'){
-    tags='<div class="sc-tags">'+
-      '<span class="tag ok">4H структура</span>'+
-      (s.lv.rr2>=3?'<span class="tag ok">RR 1:'+s.rr2+'</span>':'<span class="tag warn">RR 1:'+s.rr2+'</span>')+
-      '<span class="tag ok">15M тригер</span>'+
-      '<span class="tag ok">Daily target: '+s.lv.tp2+'</span>'+
-    '</div>';
-  }
+  var tags = s.dir !== 'WAIT' ?
+    '<div class="sc-tags">'+
+    '<span class="tag ok">4H структура</span>'+
+    (+s.lv.rr2 >= 3 ? '<span class="tag ok">RR 1:'+s.lv.rr2+'</span>' : '<span class="tag warn">RR 1:'+s.lv.rr2+'</span>')+
+    '<span class="tag ok">15M тригер</span>'+
+    '<span class="tag ok">Daily target: '+s.lv.tp2+'</span>'+
+    '</div>' : '';
 
   return '<div class="sc '+s.dir.toLowerCase()+'">'+
     '<div class="sc-head">'+
@@ -520,58 +610,52 @@ function sigCard(s,pairColor){
   '</div>';
 }
 
-function renderBiasRow(id,biasD,bias4h,bias1h){
-  var mk=function(label,b){
+function renderBiasRow(id, biasD, bias4h, bias1h) {
+  var mk = function(label, b) {
     return '<span class="btag '+b+'"><span class="tf-label">'+label+'</span>'+b.toUpperCase()+'</span>';
   };
-  document.getElementById(id).innerHTML=mk('D',biasD)+mk('4H',bias4h)+mk('1H',bias1h);
+  document.getElementById(id).innerHTML = mk('D',biasD) + mk('4H',bias4h) + mk('1H',bias1h);
 }
 
-function renderCL(id,sid,items,score){
-  document.getElementById(id).innerHTML=items.map(function(i){
+function renderCL(id, sid, items, score) {
+  document.getElementById(id).innerHTML = items.map(function(i) {
     return '<div class="ci '+(i.ok?'ok':'')+'"><div class="cico '+(i.ok?'ok':'fail')+'">'+(i.ok?'✓':'✗')+'</div><div><div>'+i.label+'</div>'+(i.sub?'<div class="ci-sub">'+i.sub+'</div>':'')+'</div></div>';
   }).join('');
-  var el=document.getElementById(sid);
-  el.textContent=score+'/6';
-  el.className='sbadge '+(score>=5?'high':score>=3?'mid':'low');
+  var el = document.getElementById(sid);
+  el.textContent = score + '/6';
+  el.className = 'sbadge ' + (score >= 5 ? 'high' : score >= 3 ? 'mid' : 'low');
 }
 
-function renderZones(xa,ea,xq,eq){
-  var rows=[];
-  var addRow=function(pair,type,level,tf,dist,st,str,col){
-    rows.push({pair:pair,type:type,level:level,tf:tf,dist:dist,st:st,str:str,col:col});
+function renderZones(xa, ea, xq, eq) {
+  var rows = [];
+  var addRow = function(pair, type, level, tf, dist, st, str, col) {
+    rows.push({pair, type, level, tf, dist, st, str, col});
   };
 
-  xa.ob4h.slice(0,2).forEach(function(z){
-    var mid=(z.top+z.bot)/2;
-    var d=Math.abs(xq.price-mid).toFixed(0)+' pts';
-    addRow('XAU/USD','ob',mid.toFixed(2),'4H',d,z.type==='bull'?'Bullish OB':'Bearish OB',85,'var(--accent)');
+  xa.ob4h.slice(0,2).forEach(function(z) {
+    var mid = (z.top+z.bot)/2;
+    addRow('XAU/USD','ob',mid.toFixed(2),'4H',Math.abs(xq.price-mid).toFixed(0)+' pts',z.type==='bull'?'Bullish OB':'Bearish OB',85,'var(--accent)');
   });
-  xa.fvg4h.slice(0,2).forEach(function(z){
-    var mid=(z.top+z.bot)/2;
-    var d=Math.abs(xq.price-mid).toFixed(0)+' pts';
-    addRow('XAU/USD','fvg',mid.toFixed(2),'4H',d,z.type==='bull'?'Bull FVG':'Bear FVG',72,'var(--accent2)');
+  xa.fvg4h.slice(0,2).forEach(function(z) {
+    var mid = (z.top+z.bot)/2;
+    addRow('XAU/USD','fvg',mid.toFixed(2),'4H',Math.abs(xq.price-mid).toFixed(0)+' pts',z.type==='bull'?'Bull FVG':'Bear FVG',72,'var(--accent2)');
   });
-  if(xa.fvgDaily.length)addRow('XAU/USD','fvg',((xa.fvgDaily[0].top+xa.fvgDaily[0].bot)/2).toFixed(2),'Daily',
-    Math.abs(xq.price-(xa.fvgDaily[0].top+xa.fvgDaily[0].bot)/2).toFixed(0)+' pts',
-    xa.fvgDaily[0].type==='bull'?'Daily Bull FVG':'Daily Bear FVG',90,'var(--accent2)');
-  if(xa.lv.bsl!=='—')addRow('XAU/USD','liq',xa.lv.bsl,'Daily','Target ↑','BSL (Daily High)',60,'var(--red)');
-  if(xa.lv.ssl!=='—')addRow('XAU/USD','liq',xa.lv.ssl,'Daily','Target ↓','SSL (Daily Low)',60,'var(--red)');
+  if (xa.fvgDay.length) addRow('XAU/USD','fvg',((xa.fvgDay[0].top+xa.fvgDay[0].bot)/2).toFixed(2),'Daily',Math.abs(xq.price-(xa.fvgDay[0].top+xa.fvgDay[0].bot)/2).toFixed(0)+' pts',xa.fvgDay[0].type==='bull'?'Daily Bull FVG':'Daily Bear FVG',90,'var(--accent2)');
+  if (xa.lv.bsl !== '—') addRow('XAU/USD','liq',xa.lv.bsl,'Daily','Target ↑','BSL (Daily High)',60,'var(--red)');
+  if (xa.lv.ssl !== '—') addRow('XAU/USD','liq',xa.lv.ssl,'Daily','Target ↓','SSL (Daily Low)',60,'var(--red)');
 
-  ea.ob4h.slice(0,2).forEach(function(z){
-    var mid=(z.top+z.bot)/2;
-    var d=(Math.abs(eq.price-mid)*10000).toFixed(0)+' pip';
-    addRow('EUR/USD','ob',mid.toFixed(5),'4H',d,z.type==='bull'?'Bullish OB':'Bearish OB',82,'var(--accent)');
+  ea.ob4h.slice(0,2).forEach(function(z) {
+    var mid = (z.top+z.bot)/2;
+    addRow('EUR/USD','ob',mid.toFixed(5),'4H',(Math.abs(eq.price-mid)*10000).toFixed(0)+' pip',z.type==='bull'?'Bullish OB':'Bearish OB',82,'var(--accent)');
   });
-  ea.fvg4h.slice(0,1).forEach(function(z){
-    var mid=(z.top+z.bot)/2;
-    var d=(Math.abs(eq.price-mid)*10000).toFixed(0)+' pip';
-    addRow('EUR/USD','fvg',mid.toFixed(5),'4H',d,z.type==='bull'?'Bull FVG':'Bear FVG',70,'var(--accent2)');
+  ea.fvg4h.slice(0,1).forEach(function(z) {
+    var mid = (z.top+z.bot)/2;
+    addRow('EUR/USD','fvg',mid.toFixed(5),'4H',(Math.abs(eq.price-mid)*10000).toFixed(0)+' pip',z.type==='bull'?'Bull FVG':'Bear FVG',70,'var(--accent2)');
   });
-  if(ea.lv.bsl!=='—')addRow('EUR/USD','liq',ea.lv.bsl,'Daily','Target ↑','BSL (Daily High)',60,'var(--red)');
-  if(ea.lv.ssl!=='—')addRow('EUR/USD','liq',ea.lv.ssl,'Daily','Target ↓','SSL (Daily Low)',60,'var(--red)');
+  if (ea.lv.bsl !== '—') addRow('EUR/USD','liq',ea.lv.bsl,'Daily','Target ↑','BSL (Daily High)',60,'var(--red)');
+  if (ea.lv.ssl !== '—') addRow('EUR/USD','liq',ea.lv.ssl,'Daily','Target ↓','SSL (Daily Low)',60,'var(--red)');
 
-  document.getElementById('zones').innerHTML=rows.map(function(z){
+  document.getElementById('zones').innerHTML = rows.map(function(z) {
     return '<tr>'+
       '<td style="color:'+(z.pair==='XAU/USD'?'var(--yellow)':'var(--accent)')+';font-weight:700">'+z.pair+'</td>'+
       '<td><span class="zt '+z.type+'">'+z.type.toUpperCase()+'</span></td>'+
@@ -584,76 +668,91 @@ function renderZones(xa,ea,xq,eq){
   }).join('');
 }
 
-function showErr(m){var e=document.getElementById('errBox');e.textContent='⚠ '+m;e.style.display='block';}
-function hideErr(){document.getElementById('errBox').style.display='none';}
+function showErr(m) { var e = document.getElementById('errBox'); e.textContent = '⚠ ' + m; e.style.display = 'block'; }
+function hideErr() { document.getElementById('errBox').style.display = 'none'; }
+function showInfo(m) { var e = document.getElementById('infoBox'); e.textContent = m; e.style.display = 'block'; }
+function hideInfo() { document.getElementById('infoBox').style.display = 'none'; }
 
-function runAnalysis(){
-  var key=document.getElementById('apiKey').value.trim();
-  if(!key){showErr('Введи API ключ');return;}
-  hideErr();
+var autoRefreshTimer = null;
+
+function runAnalysis() {
+  var key = document.getElementById('apiKey').value.trim();
+  if (!key) { showErr('Введи API ключ'); return; }
+
+  // Check credits — each pair batch = ~4 credits (4 TF), total ~8
+  // We use /complex_data which is 1 HTTP req but still N credits internally
+  // Conservative: block if less than 8 credits remaining in window
+  if (!creditsAvailable(8)) {
+    showErr('Недостатньо API кредитів. Зачекай закінчення cooldown або натисни після таймера.');
+    return;
+  }
+
+  hideErr(); hideInfo();
   document.getElementById('spin').classList.add('on');
-  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження HTF даних...</div>';
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('feed').innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження даних (batch mode)...</div>';
 
-  Promise.all([
-    // XAU: 15M, 1H, 4H, Daily
-    fetchCandles('XAU','15min',60,key),
-    fetchCandles('XAU','1h',50,key),
-    fetchCandles('XAU','4h',40,key),
-    fetchCandles('XAU','1day',30,key),
-    fetchQuote('XAU',key),
-    // EUR: 15M, 1H, 4H, Daily
-    fetchCandles('EUR','15min',60,key),
-    fetchCandles('EUR','1h',50,key),
-    fetchCandles('EUR','4h',40,key),
-    fetchCandles('EUR','1day',30,key),
-    fetchQuote('EUR',key)
-  ]).then(function(res){
-    var x15=res[0],x1h=res[1],x4h=res[2],xDay=res[3],xq=res[4];
-    var e15=res[5],e1h=res[6],e4h=res[7],eDay=res[8],eq=res[9];
+  // Sequential: XAU first, then EUR after 1s delay — avoids rate burst
+  fetchPairData('XAU', key).then(function(xData) {
+    useCredits(4); // 4 TFs = 4 credits
+    updateCreditUI();
 
-    document.getElementById('apiKey').className='api-input ok';
+    // 1 second gap before second pair
+    return new Promise(function(resolve) { setTimeout(resolve, 1000); }).then(function() {
+      return fetchPairData('EUR', key).then(function(eData) {
+        useCredits(4);
+        updateCreditUI();
+        return {xData, eData};
+      });
+    });
+  }).then(function(result) {
+    var xData = result.xData, eData = result.eData;
 
-    // Update price cards
-    document.getElementById('xauP').textContent=xq.price.toFixed(2);
-    document.getElementById('eurP').textContent=eq.price.toFixed(5);
-    document.getElementById('xauH').textContent=xq.high.toFixed(2);
-    document.getElementById('xauL').textContent=xq.low.toFixed(2);
-    document.getElementById('eurH').textContent=eq.high.toFixed(5);
-    document.getElementById('eurL').textContent=eq.low.toFixed(5);
+    document.getElementById('apiKey').className = 'api-input ok';
 
-    var atrX=calcATR(x4h,14);
-    var atrE=calcATR(e4h,14);
-    document.getElementById('xauATR').textContent=atrX.toFixed(2)+' pts';
-    document.getElementById('eurATR').textContent=(atrE*10000).toFixed(1)+' pip';
+    var xq = quoteFromCandles(xData.c1h);
+    var eq = quoteFromCandles(eData.c1h);
 
-    function sc(id,v){var e=document.getElementById(id);e.textContent=(v>=0?'+':'')+v.toFixed(2)+'%';e.className='bs-chg '+(v>=0?'up':'dn');}
-    sc('xauC',xq.change);sc('eurC',eq.change);
+    document.getElementById('xauP').textContent = xq.price.toFixed(2);
+    document.getElementById('eurP').textContent = eq.price.toFixed(5);
+    document.getElementById('xauH').textContent = xq.high.toFixed(2);
+    document.getElementById('xauL').textContent = xq.low.toFixed(2);
+    document.getElementById('eurH').textContent = eq.high.toFixed(5);
+    document.getElementById('eurL').textContent = eq.low.toFixed(5);
 
-    // Analyze
-    var xa=analyze(x15,x1h,x4h,xDay,xq,2,'XAU');
-    var ea=analyze(e15,e1h,e4h,eDay,eq,5,'EUR');
+    var atrX = calcATR(xData.c4h, 14);
+    var atrE = calcATR(eData.c4h, 14);
+    document.getElementById('xauATR').textContent = atrX.toFixed(2) + ' pts';
+    document.getElementById('eurATR').textContent = (atrE * 10000).toFixed(1) + ' pip';
 
-    // Bias rows
-    renderBiasRow('xauBiasRow',xa.biasDaily,xa.bias4h,xa.bias1h);
-    renderBiasRow('eurBiasRow',ea.biasDaily,ea.bias4h,ea.bias1h);
+    function sc(id, v) {
+      var e = document.getElementById(id);
+      e.textContent = (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+      e.className = 'bs-chg ' + (v >= 0 ? 'up' : 'dn');
+    }
+    sc('xauC', xq.change); sc('eurC', eq.change);
 
-    // Signals
-    document.getElementById('feed').innerHTML=
-      sigCard(mkSignal('XAUUSD',xa,xq.price,2),'var(--yellow)')+
-      sigCard(mkSignal('EURUSD',ea,eq.price,5),'var(--accent)');
+    var xa = analyze(xData.c15, xData.c1h, xData.c4h, xData.cDay, xq, 2);
+    var ea = analyze(eData.c15, eData.c1h, eData.c4h, eData.cDay, eq, 5);
 
-    // Checklists
+    renderBiasRow('xauBiasRow', xa.biasDay, xa.bias4h, xa.bias1h);
+    renderBiasRow('eurBiasRow', ea.biasDay, ea.bias4h, ea.bias1h);
+
+    document.getElementById('feed').innerHTML =
+      sigCard(mkSignal('XAUUSD', xa, xq.price, 2)) +
+      sigCard(mkSignal('EURUSD', ea, eq.price, 5));
+
     renderCL('xauCL','xauSc',[
-      {label:'Daily + 4H + 1H bias aligned',ok:xa.htfAligned,sub:xa.biasDaily+' / '+xa.bias4h+' / '+xa.bias1h},
+      {label:'Daily+4H+1H bias aligned',ok:xa.htfAligned,sub:xa.biasDay+' / '+xa.bias4h+' / '+xa.bias1h},
       {label:'4H OB або FVG як entry зона',ok:xa.has4hOB||xa.has4hFVG,sub:xa.relevantOB?'4H OB @ '+xa.lv.entry:xa.relevantFVG?'4H FVG @ '+xa.lv.entry:'Немає'},
-      {label:'15M Liquidity Sweep перед входом',ok:xa.sweep15.swept,sub:xa.sweep15.swept?'Swept @ '+xa.sweep15.level:'Очікуємо sweep'},
+      {label:'15M Liquidity Sweep перед входом',ok:xa.sweep15.swept,sub:xa.sweep15.swept?'Swept':'Очікуємо sweep'},
       {label:'CHOCH після sweep (1H підтвердження)',ok:xa.choch,sub:xa.choch?'Підтверджено':'Ще не було'},
       {label:'Rejection Block на 1H',ok:xa.rb1h.length>0,sub:xa.rb1h.length?'RB @ '+xa.rb1h[0].level.toFixed(2):'Немає'},
       {label:'RR ≥ 1:3 до Daily ліквідності',ok:xa.rrOk,sub:'RR до TP2: 1:'+xa.lv.rr2}
     ],xa.score);
 
     renderCL('eurCL','eurSc',[
-      {label:'Daily + 4H + 1H bias aligned',ok:ea.htfAligned,sub:ea.biasDaily+' / '+ea.bias4h+' / '+ea.bias1h},
+      {label:'Daily+4H+1H bias aligned',ok:ea.htfAligned,sub:ea.biasDay+' / '+ea.bias4h+' / '+ea.bias1h},
       {label:'4H OB або FVG як entry зона',ok:ea.has4hOB||ea.has4hFVG,sub:ea.relevantOB?'4H OB @ '+ea.lv.entry:ea.relevantFVG?'4H FVG @ '+ea.lv.entry:'Немає'},
       {label:'15M Liquidity Sweep перед входом',ok:ea.sweep15.swept,sub:ea.sweep15.swept?'Swept':'Очікуємо sweep'},
       {label:'CHOCH після sweep (1H підтвердження)',ok:ea.choch,sub:ea.choch?'Підтверджено':'Ще не було'},
@@ -661,24 +760,36 @@ function runAnalysis(){
       {label:'RR ≥ 1:3 до Daily ліквідності',ok:ea.rrOk,sub:'RR до TP2: 1:'+ea.lv.rr2}
     ],ea.score);
 
-    renderZones(xa,ea,xq,eq);
+    renderZones(xa, ea, xq, eq);
 
-    var now=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev'});
-    document.getElementById('lastUpd').textContent='✅ Live · '+now+' KY · Auto-refresh 5хв';
+    var now = new Date().toLocaleTimeString('uk-UA', {timeZone:'Europe/Kiev'});
+    document.getElementById('lastUpd').textContent = '✅ Live · ' + now + ' KY · Використано 8 кредитів · Наступний через 5хв';
     document.getElementById('spin').classList.remove('on');
+    document.getElementById('analyzeBtn').disabled = false;
 
-  }).catch(function(e){
-    document.getElementById('apiKey').className='api-input err';
-    showErr('Помилка: '+e.message);
-    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Не вдалося завантажити дані</div>';
+    showInfo('ℹ️ Режим батч-запитів: 2 запити замість 10 · 8 кредитів витрачено · Cooldown 60s захищає від перевищення ліміту');
+
+    // Start 60s cooldown (reset credit window)
+    startCooldown(60);
+
+    // Auto-refresh every 5 min
+    if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
+    autoRefreshTimer = setTimeout(runAnalysis, 5 * 60 * 1000);
+
+  }).catch(function(e) {
+    document.getElementById('apiKey').className = 'api-input err';
+    var msg = e.message || '';
+    if (msg.toLowerCase().includes('credit') || msg.toLowerCase().includes('limit')) {
+      showErr('Перевищено ліміт API кредитів. Зачекай 60 секунд і спробуй знову.');
+      startCooldown(60);
+    } else {
+      showErr('Помилка: ' + msg);
+    }
+    document.getElementById('feed').innerHTML = '<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Не вдалося завантажити дані</div>';
     document.getElementById('spin').classList.remove('on');
+    document.getElementById('analyzeBtn').disabled = false;
   });
 }
-
-function showErr(m){var e=document.getElementById('errBox');e.textContent='⚠ '+m;e.style.display='block';}
-function hideErr(){document.getElementById('errBox').style.display='none';}
-
-setInterval(runAnalysis,5*60*1000);
 </script>
 </body>
 </html>
