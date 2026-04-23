@@ -11,7 +11,7 @@
   body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;overflow-x:hidden}
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
   .wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px}
- 
+
   header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid var(--border);margin-bottom:20px}
   .logo{font-family:var(--sans);font-weight:800;font-size:20px}
   .logo em{color:var(--accent);font-style:normal}
@@ -20,7 +20,7 @@
   .sess{font-size:11px;padding:4px 10px;border-radius:2px;border:1px solid;letter-spacing:1px;text-transform:uppercase}
   .sess.london{border-color:var(--accent);color:var(--accent)}.sess.ny{border-color:var(--yellow);color:var(--yellow)}.sess.off{border-color:var(--muted);color:var(--muted)}
   .clock{font-size:12px;color:var(--muted)}
- 
+
   .bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11px;color:var(--muted)}
   .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,150,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,200,150,0)}}
@@ -30,7 +30,7 @@
   .btn:hover{background:var(--accent);color:var(--bg)}
   .err-box{background:rgba(255,61,107,.08);border:1px solid rgba(255,61,107,.25);color:var(--red);font-size:11px;padding:12px 16px;margin-bottom:14px;display:none;line-height:1.6}
   .note{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.12);color:var(--accent);font-size:10px;padding:10px 14px;margin-bottom:16px}
- 
+
   /* Pair cards */
   .pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
   .pc{background:var(--bg2);border:1px solid var(--border);padding:18px;position:relative;overflow:hidden}
@@ -50,15 +50,15 @@
   .tf-lbl{font-size:8px;color:var(--muted);margin-right:2px}
   .pc-meta{font-size:9px;color:var(--muted);display:flex;gap:10px}
   .pc-meta b{color:var(--text)}
- 
+
   .stitle{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
- 
+
   /* Signal card */
   .feed{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
   .sc{background:var(--bg2);border:1px solid var(--border);border-left:4px solid;padding:18px;animation:si .4s ease}
   @keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
   .sc.buy{border-left-color:var(--green)}.sc.sell{border-left-color:var(--red)}.sc.wait{border-left-color:var(--yellow)}
- 
+
   .sc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:10px}
   .sc-hl{display:flex;align-items:center;gap:12px}
   .sc-dir{font-family:var(--sans);font-weight:800;font-size:18px;letter-spacing:2px;min-width:55px}
@@ -74,14 +74,14 @@
   .spill.pa{border-color:rgba(185,122,255,.3);color:var(--purple);background:rgba(185,122,255,.06)}
   .spill.fa{border-color:rgba(255,159,28,.3);color:var(--orange);background:rgba(255,159,28,.06)}
   .spill.of{border-color:rgba(0,212,170,.3);color:var(--teal);background:rgba(0,212,170,.06)}
- 
+
   /* Level grid */
   .lvl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
   .lvl-box{background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center}
   .lvl-lbl{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
   .lvl-val{font-size:12px;font-weight:700}
   .lvl-val.entry{color:var(--accent)}.lvl-val.sl{color:var(--red)}.lvl-val.tp1{color:rgba(0,200,150,.8)}.lvl-val.tp2{color:var(--green)}
- 
+
   /* PA confirmation box */
   .pa-box{background:rgba(185,122,255,.05);border:1px solid rgba(185,122,255,.2);padding:12px 14px;margin-bottom:10px}
   .pa-title{font-size:10px;color:var(--purple);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
@@ -91,7 +91,7 @@
   .pa-pat.bear{background:rgba(255,61,107,.08);color:var(--red);border-color:rgba(255,61,107,.2)}
   .pa-pat.neutral{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
   .pa-none{font-size:10px;color:var(--muted)}
- 
+
   /* Fundamental Analysis box */
   .fa-box{background:rgba(255,159,28,.04);border:1px solid rgba(255,159,28,.2);padding:12px 14px;margin-bottom:10px}
   .fa-title{font-size:10px;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
@@ -109,7 +109,7 @@
   .ev-time{color:var(--muted);min-width:40px}
   .ev-name{color:var(--text);flex:1}
   .ev-fore{color:var(--accent);min-width:50px;text-align:right}
- 
+
   /* Order Flow box */
   .of-box{background:rgba(0,212,170,.04);border:1px solid rgba(0,212,170,.2);padding:12px 14px;margin-bottom:10px}
   .of-title{font-size:10px;color:var(--teal);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
@@ -132,7 +132,7 @@
   .of-tag.buy{background:rgba(0,200,150,.08);color:var(--green);border-color:rgba(0,200,150,.2)}
   .of-tag.sell{background:rgba(255,61,107,.08);color:var(--red);border-color:rgba(255,61,107,.2)}
   .of-tag.warn{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
- 
+
   .sc-desc{font-size:10px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);padding-top:10px}
   .sc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
   .tag{font-size:9px;padding:2px 7px;border-radius:2px;border:1px solid}
@@ -141,7 +141,7 @@
   .tag.fa{background:rgba(255,159,28,.08);color:var(--orange);border-color:rgba(255,159,28,.2)}
   .tag.of{background:rgba(0,212,170,.08);color:var(--teal);border-color:rgba(0,212,170,.2)}
   .tag.warn{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
- 
+
   /* Checklist */
   .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
   .clc{background:var(--bg2);border:1px solid var(--border);padding:16px}
@@ -158,7 +158,7 @@
   .cico.fa{background:rgba(255,159,28,.15);color:var(--orange)}
   .cico.of{background:rgba(0,212,170,.15);color:var(--teal)}
   .ci-sub{font-size:9px;color:var(--muted);margin-top:2px}
- 
+
   /* Fundamental panel */
   .fa-panel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
   .fa-card{background:var(--bg2);border:1px solid var(--border);padding:16px;position:relative;overflow:hidden}
@@ -172,7 +172,7 @@
   .macro-sub{font-size:8px;color:var(--muted);margin-top:2px}
   .sentiment-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:10px;position:relative}
   .sentiment-fill{height:100%;border-radius:4px;transition:width .5s ease}
- 
+
   /* Zones table */
   table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px}
   th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:400;letter-spacing:1px;text-transform:uppercase;font-size:9px}
@@ -181,7 +181,7 @@
   .zt{display:inline-block;padding:2px 6px;border-radius:2px;font-size:9px;font-weight:700}
   .zt.ob{background:rgba(0,229,255,.1);color:var(--accent)}.zt.fvg{background:rgba(255,107,53,.1);color:var(--accent2)}.zt.rb{background:rgba(255,209,102,.1);color:var(--yellow)}.zt.liq{background:rgba(255,61,107,.1);color:var(--red)}
   .sbar{width:60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}.sfill{height:100%;border-radius:2px}
- 
+
   footer{border-top:1px solid var(--border);padding-top:14px;display:flex;justify-content:space-between;font-size:9px;color:var(--muted)}
   @media(max-width:640px){
     .pairs,.clgrid,.fa-panel{grid-template-columns:1fr}
@@ -194,7 +194,7 @@
 </head>
 <body>
 <div class="wrap">
- 
+
 <header>
   <div class="logo">SMC<em>/</em>ICT<small>+ PA · FA · OrderFlow</small></div>
   <div class="hdr-r">
@@ -202,17 +202,17 @@
     <div class="clock" id="clock">--:--:--</div>
   </div>
 </header>
- 
-<div class="note">✦ Yahoo Finance · Без API ключа · SMC/ICT + Price Action + Fundamental + Order Flow · v6.0</div>
+
+<div class="note">✦ Binance Futures API · Реальний час · Без API ключа · SMC/ICT + Price Action + Fundamental + Order Flow · v7.0</div>
 <div class="err-box" id="errBox"></div>
- 
+
 <div class="bar">
   <div class="dot"></div>
   <span id="lastUpd">Завантаження...</span>
   <button class="btn" onclick="runAnalysis()">↻ Оновити</button>
   <div class="spinner" id="spin"></div>
 </div>
- 
+
 <!-- Pair cards -->
 <div class="stitle">▸ HTF Bias (Daily · 4H · 1H)</div>
 <div class="pairs">
@@ -231,7 +231,7 @@
     <div class="pc-meta">H:<b id="eurH">—</b> L:<b id="eurL">—</b> ATR:<b id="eurATR">—</b> Vol:<b id="eurVol">—</b></div>
   </div>
 </div>
- 
+
 <!-- Fundamental Panel -->
 <div class="stitle">▸ Фундаментальний аналіз</div>
 <div class="fa-panel">
@@ -259,31 +259,31 @@
     </div>
   </div>
 </div>
- 
+
 <!-- Signals -->
 <div class="stitle">▸ Сигнали (SMC + PA + FA + OrderFlow)</div>
 <div class="feed" id="feed"><div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження...</div></div>
- 
+
 <!-- Checklist -->
 <div class="stitle">▸ Checklist (SMC + PA + FA + OF)</div>
 <div class="clgrid">
   <div class="clc"><div class="clh">XAU/USD <div class="sbadge" id="xauSc">—</div></div><div id="xauCL"></div></div>
   <div class="clc"><div class="clh">EUR/USD <div class="sbadge" id="eurSc">—</div></div><div id="eurCL"></div></div>
 </div>
- 
+
 <!-- Zones -->
 <div class="stitle">▸ HTF Зони</div>
 <table>
   <thead><tr><th>Пара</th><th>Тип</th><th>Рівень</th><th>TF</th><th>Відстань</th><th>PA патерн</th><th>Сила</th></tr></thead>
   <tbody id="zones"><tr><td colspan="7" style="color:var(--muted);padding:20px;text-align:center">—</td></tr></tbody>
 </table>
- 
+
 <footer>
-  <div>⚠ Технічний аналіз — не фінансова порада. Yahoo Finance + розрахункові індикатори.</div>
-  <div>v6.0 · SMC+PA+FA+OF</div>
+  <div>⚠ Технічний аналіз — не фінансова порада. Binance Futures API · реальний час.</div>
+  <div>v7.0 · SMC+PA+FA+OF · Binance</div>
 </footer>
 </div>
- 
+
 <script>
 // ── Clock ──────────────────────────────────────────────────────────────────
 function tick(){
@@ -298,92 +298,65 @@ function tick(){
   else{el.textContent='OFF SESSION';el.className='sess off';}
 }
 setInterval(tick,1000);tick();
- 
-// ── Yahoo Finance — свіжі дані з кількома проксі і cache-bust ──────────────
-var PROXIES=[
-  'https://corsproxy.io/?',
-  'https://api.allorigins.win/raw?url=',
-  'https://proxy.cors.sh/'
-];
-var proxyIdx=0;
- 
-function fetchWithProxy(url,attempt){
-  attempt=attempt||0;
-  if(attempt>=PROXIES.length)return Promise.reject(new Error('All proxies failed'));
-  var proxy=PROXIES[(proxyIdx+attempt)%PROXIES.length];
-  var bust='&_='+Date.now(); // cache-bust
-  var fullUrl=proxy+encodeURIComponent(url+bust);
-  return fetch(fullUrl,{cache:'no-store'})
-    .then(function(r){
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      return r.json();
-    })
-    .catch(function(){
-      return fetchWithProxy(url,attempt+1);
+
+// ── Binance Futures API — реальний час, без проксі, без ключа ──────────────
+// XAUUSDT = Gold/USD  |  EURUSDT = EUR/USD
+// Base: https://fapi.binance.com (Futures — має XAUUSDT і EURUSDT)
+
+var BNBASE='https://fapi.binance.com';
+
+// interval map: '15m','1h','4h','1d'
+// limit: кількість свічок
+function bnFetch(symbol,interval,limit){
+  var url=BNBASE+'/fapi/v1/klines?symbol='+symbol+'&interval='+interval+'&limit='+limit;
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('BN HTTP '+r.status);return r.json();})
+    .then(function(arr){
+      // Binance kline: [openTime, o, h, l, c, vol, closeTime, ...]
+      // Повертаємо від нового до старого (reverse)
+      var out=arr.map(function(k){
+        return{t:k[0]/1000,o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]};
+      });
+      return out.reverse(); // newest first
     });
 }
- 
-function yahooFetch(ticker,interval,range){
-  var url='https://query2.finance.yahoo.com/v8/finance/chart/'+ticker+'?interval='+interval+'&range='+range+'&includePrePost=false&corsDomain=finance.yahoo.com';
-  return fetchWithProxy(url)
-    .then(function(d){
-      if(!d.chart||!d.chart.result||!d.chart.result[0])throw new Error('No data: '+ticker);
-      var res=d.chart.result[0];
-      var ts=res.timestamps||res.timestamp;
-      var q=res.indicators.quote[0];
-      var out=[];
-      for(var i=0;i<ts.length;i++){
-        if(q.open[i]==null||q.close[i]==null)continue;
-        out.push({t:ts[i],o:q.open[i],h:q.high[i],l:q.low[i],c:q.close[i],v:q.volume[i]||0});
-      }
-      // Тільки свіжі свічки (відкидаємо старіші 2 доби)
-      var cutoff=(Date.now()/1000)-172800;
-      var fresh=out.filter(function(x){return x.t>cutoff;});
-      return(fresh.length>10?fresh:out).reverse();
-    });
+
+function bnQuote(symbol){
+  // 24h ticker для H/L/change + ticker price для реальної ціни
+  var p1=fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
+  var p2=fetch(BNBASE+'/fapi/v1/ticker/price?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
+  return Promise.all([p1,p2]).then(function(res){
+    var t=res[0],pr=res[1];
+    var price=+pr.price;
+    var prev=price-(+t.priceChange);
+    return{
+      price:price,
+      change:+t.priceChangePercent,
+      high:+t.highPrice,
+      low:+t.lowPrice,
+      open:+t.openPrice,
+      prev:prev,
+      volume:+t.volume,
+      ts:Date.now()
+    };
+  });
 }
- 
-function yahooQuote(ticker){
-  var url='https://query2.finance.yahoo.com/v8/finance/chart/'+ticker+'?interval=1m&range=1d&includePrePost=false&corsDomain=finance.yahoo.com';
-  return fetchWithProxy(url)
-    .then(function(d){
-      var res=d.chart.result[0],meta=res.meta;
-      var price=meta.regularMarketPrice||meta.price;
-      // Свіжа ціна: якщо є хвилинні дані — берем останню свічку
-      var q=res.indicators.quote[0];
-      var ts=res.timestamps||res.timestamp||[];
-      if(ts.length>0&&q.close){
-        for(var i=ts.length-1;i>=0;i--){
-          if(q.close[i]!=null){price=q.close[i];break;}
-        }
-      }
-      var prev=meta.chartPreviousClose||meta.previousClose||price;
-      var vol=0;
-      if(q.volume){vol=q.volume.filter(Boolean).reduce(function(a,b){return a+b;},0);}
-      return{
-        price:price,
-        change:((price-prev)/prev)*100,
-        high:meta.regularMarketDayHigh||price,
-        low:meta.regularMarketDayLow||price,
-        open:meta.regularMarketOpen||price,
-        prev:prev,
-        volume:vol,
-        ts:Date.now()
-      };
-    });
-}
- 
+
+
+
 function make4h(c1h){
+  // c1h вже newest-first; групуємо по 4 свічки
   var out=[],i=0;
   while(i+3<c1h.length){
     var g=c1h.slice(i,i+4);
     var vol=g.reduce(function(a,c){return a+(c.v||0);},0);
-    out.push({t:g[0].t,o:g[0].o,h:Math.max.apply(null,g.map(function(c){return c.h;})),l:Math.min.apply(null,g.map(function(c){return c.l;})),c:g[g.length-1].c,v:vol});
+    // g[0] = найновіша, g[3] = найстаріша → для OHLC: open від g[3], close від g[0]
+    out.push({t:g[3].t,o:g[3].o,h:Math.max.apply(null,g.map(function(c){return c.h;})),l:Math.min.apply(null,g.map(function(c){return c.l;})),c:g[0].c,v:vol});
     i+=4;
   }
-  return out;
+  return out; // newest-first
 }
- 
+
 // ── SMC Tools ─────────────────────────────────────────────────────────────
 function calcATR(cc,p){
   var tr=[],lim=Math.min(cc.length-1,p);
@@ -443,11 +416,11 @@ function swingPts(cc,lb){
   }
   return{highs:sh.sort(function(a,b){return b-a;}),lows:sl.sort(function(a,b){return a-b;})};
 }
- 
+
 // ── ORDER FLOW ENGINE ─────────────────────────────────────────────────────
 function calcOrderFlow(cc){
   if(cc.length<5)return{delta:0,deltaDir:'neutral',absorption:false,imbalance:false,buyPressure:50,vpBars:[],pocIdx:0,ofTags:[]};
- 
+
   // Delta (estimate): bull candles = buy vol, bear = sell vol
   var buyVol=0,sellVol=0,totalVol=0;
   var lookback=Math.min(20,cc.length);
@@ -460,10 +433,10 @@ function calcOrderFlow(cc){
   }
   var delta=totalVol>0?((buyVol-sellVol)/totalVol)*100:0;
   var deltaDir=delta>15?'buy':delta<-15?'sell':'neutral';
- 
+
   // Buy pressure %
   var buyPressure=totalVol>0?Math.round((buyVol/(buyVol+sellVol))*100):50;
- 
+
   // Absorption detection: large volume candles with small body = absorption
   var avgVol=totalVol/lookback;
   var absorption=false;
@@ -472,7 +445,7 @@ function calcOrderFlow(cc){
     var bx=Math.abs(cx.c-cx.o)/(cx.h-cx.l||0.0001);
     if(vx>avgVol*1.8&&bx<0.3){absorption=true;break;}
   }
- 
+
   // Imbalance: 3+ consecutive same-direction candles with increasing volume
   var imbalance=false;
   if(cc.length>=3){
@@ -481,7 +454,7 @@ function calcOrderFlow(cc){
     var volInc=(cc[0].v||0)>(cc[1].v||0)&&(cc[1].v||0)>(cc[2].v||0);
     if((allBull||allBear)&&volInc)imbalance=true;
   }
- 
+
   // Mini volume profile (10 buckets)
   var vols=cc.slice(0,Math.min(30,cc.length));
   var minP=Math.min.apply(null,vols.map(function(c){return c.l;}));
@@ -496,7 +469,7 @@ function calcOrderFlow(cc){
   var maxV=Math.max.apply(null,vpBars)||1;
   var pocIdx=vpBars.indexOf(Math.max.apply(null,vpBars));
   var vpNorm=vpBars.map(function(v){return Math.round((v/maxV)*100);});
- 
+
   // OF Tags
   var ofTags=[];
   if(deltaDir==='buy')ofTags.push({t:'Buy Delta ↑',cls:'buy'});
@@ -505,95 +478,128 @@ function calcOrderFlow(cc){
   if(imbalance)ofTags.push({t:'Vol Imbalance',cls:cc[0].c>cc[0].o?'buy':'sell'});
   if(buyPressure>65)ofTags.push({t:'Buy Pressure '+buyPressure+'%',cls:'buy'});
   else if(buyPressure<35)ofTags.push({t:'Sell Pressure '+(100-buyPressure)+'%',cls:'sell'});
- 
+
   return{delta:Math.round(delta),deltaDir:deltaDir,absorption:absorption,imbalance:imbalance,
     buyPressure:buyPressure,vpBars:vpNorm,pocIdx:pocIdx,ofTags:ofTags};
 }
- 
+
 // ── FUNDAMENTAL ENGINE ────────────────────────────────────────────────────
 var fundamentalData={dxy:null,spx:null,vix:null,loaded:false};
- 
+
 function loadFundamentals(){
+  // Використовуємо Binance Futures:
+  // DXY proxy: USDCUSDT inverse (або просто BTCUSDT напрямок як risk)
+  // Risk proxy: BTCUSDT — зростає = risk-on
+  // VIX proxy: волатильність через ATR BTC 4h
   return Promise.all([
-    yahooQuote('DX-Y.NYB').catch(function(){return yahooQuote('^DXY').catch(function(){return null;});}),
-    yahooQuote('^GSPC').catch(function(){return null;}),
-    yahooQuote('^VIX').catch(function(){return null;})
+    // BTC як risk-on/off proxy (найбільший ризиковий актив)
+    fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol=BTCUSDT',{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return null;}),
+    // USDCUSDT ≈ 1 завжди, але індекс долара можна апроксимувати через EUR/USD inverse
+    // EURUSDT зміна — якщо EUR падає → DXY росте
+    fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol=EURUSDT',{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return null;}),
+    // Klines BTC 4h для ATR-based VIX proxy
+    bnFetch('BTCUSDT','4h',14).catch(function(){return[];})
   ]).then(function(res){
-    fundamentalData.dxy=res[0];
-    fundamentalData.spx=res[1];
-    fundamentalData.vix=res[2];
+    var btc24=res[0],eur24=res[1],btc4h=res[2];
+    // risk proxy: BTC зміна за 24h
+    fundamentalData.btcChange=btc24?+btc24.priceChangePercent:0;
+    // DXY proxy: -EUR зміна (якщо EUR падає → DXY росте → bear для Gold/EUR)
+    fundamentalData.eurChange=eur24?+eur24.priceChangePercent:0;
+    // VIX proxy: BTC 4h ATR як % від ціни
+    if(btc4h.length>=5){
+      var atr=calcATR(btc4h,14);
+      var btcPrice=btc4h[0]?btc4h[0].c:1;
+      fundamentalData.vixProxy=+(atr/btcPrice*100).toFixed(2); // % волатильність
+    } else {
+      fundamentalData.vixProxy=null;
+    }
     fundamentalData.loaded=true;
   });
 }
- 
+
 function calcFundamentals(pair){
-  var dxy=fundamentalData.dxy,spx=fundamentalData.spx,vix=fundamentalData.vix;
- 
-  // DXY direction
-  var dxyDir='neutral',dxyChange=0;
-  if(dxy){dxyChange=dxy.change;dxyDir=dxyChange>0.15?'bear':dxyChange<-0.15?'bull':'neutral';}
- 
-  // Risk mode from SPX + VIX
+  var btcChange=fundamentalData.btcChange||0;
+  var eurChange=fundamentalData.eurChange||0;
+  var vixProxy=fundamentalData.vixProxy; // % BTC ATR
+
+  // DXY proxy: якщо EUR/USD падає — долар зростає (DXY bull)
+  var dxyDir='neutral';
+  var dxyChange=-eurChange; // інверсія EUR → DXY
+  if(dxyChange>0.3)dxyDir='bull';
+  else if(dxyChange<-0.3)dxyDir='bear';
+
+  // Risk mode: BTC+EUR combined
   var riskMode='neutral';
-  var vixVal=vix?vix.price:0;
-  var spxChange=spx?spx.change:0;
-  if(vixVal>25||spxChange<-0.8)riskMode='off';
-  else if(vixVal<16&&spxChange>0.4)riskMode='on';
- 
+  if(btcChange>2&&eurChange>0.2)riskMode='on';
+  else if(btcChange<-2&&eurChange<-0.2)riskMode='off';
+  else if(btcChange>1.5)riskMode='on';
+  else if(btcChange<-1.5)riskMode='off';
+
   // VIX proxy text
-  var vixText=vixVal?vixVal.toFixed(1):'—';
- 
-  // Gold fundamental bias: DXY bear + risk-off = bull; DXY bull + risk-on = bear
-  var goldBias='neutral',goldSub='DXY neutral';
-  if(dxyDir==='bear'&&riskMode==='off')      {goldBias='bull';goldSub='DXY↓ + Risk-OFF = Gold↑';}
-  else if(dxyDir==='bear'&&riskMode!=='on')  {goldBias='bull';goldSub='DXY слабкий → Gold↑';}
-  else if(dxyDir==='bull'&&riskMode==='on')  {goldBias='bear';goldSub='DXY↑ + Risk-ON = Gold↓';}
-  else if(dxyDir==='bull')                   {goldBias='bear';goldSub='DXY сильний → Gold↓';}
-  else if(riskMode==='off')                  {goldBias='bull';goldSub='Risk-OFF → Gold↑';}
- 
-  // EUR fundamental bias: DXY bear = EUR bull
-  var eurBias='neutral',eurSub='DXY нейтральний';
+  var vixText=vixProxy!=null?vixProxy.toFixed(2)+'%':'—';
+  var vixHigh=vixProxy!=null&&vixProxy>3.5;
+  var vixLow=vixProxy!=null&&vixProxy<1.5;
+
+  // Якщо VIX proxy висока — ризик-офф
+  if(vixHigh&&riskMode==='neutral')riskMode='off';
+
+  // Gold FA bias
+  var goldBias='neutral',goldSub='Нейтральний';
+  if(dxyDir==='bear'&&riskMode==='off')    {goldBias='bull';goldSub='DXY↓ + Risk-OFF = Gold↑';}
+  else if(dxyDir==='bear')                 {goldBias='bull';goldSub='DXY слабкий → Gold↑';}
+  else if(dxyDir==='bull'&&riskMode==='on'){goldBias='bear';goldSub='DXY↑ + Risk-ON = Gold↓';}
+  else if(dxyDir==='bull')                 {goldBias='bear';goldSub='DXY сильний → Gold↓';}
+  else if(riskMode==='off')                {goldBias='bull';goldSub='Risk-OFF → Gold↑';}
+  else if(riskMode==='on')                 {goldBias='neutral';goldSub='Risk-ON, нейтральний для Gold';}
+
+  // EUR FA bias
+  var eurBias='neutral',eurSub='Нейтральний';
   if(dxyDir==='bear'){eurBias='bull';eurSub='DXY↓ → EUR↑';}
   else if(dxyDir==='bull'){eurBias='bear';eurSub='DXY↑ → EUR↓';}
-  if(riskMode==='off'){eurBias=eurBias==='bull'?'neutral':'bear';eurSub+=', Risk-OFF';}
- 
-  // COT Proxy (SPX momentum vs Gold momentum as rough speculative sentiment)
-  var cotBias='neutral',cotSub='';
-  if(spx&&dxy){
-    if(spxChange>0.5&&dxy.change<0){cotBias='bull';cotSub='Спекулянти Long';}
-    else if(spxChange<-0.5&&dxy.change>0){cotBias='bear';cotSub='Спекулянти Short';}
-    else{cotSub='Нейтральний';}
+  if(riskMode==='off'){
+    if(eurBias==='bull')eurBias='neutral';
+    eurSub+=', Risk-OFF';
   }
- 
-  // Sentiment 0-100 (50=neutral)
+
+  // COT Proxy (BTC рух як спекулятивний настрій)
+  var cotBias='neutral',cotSub='Нейтральний';
+  if(btcChange>3){cotBias='bull';cotSub='BTC +'+btcChange.toFixed(1)+'% → Спекулянти Long';}
+  else if(btcChange<-3){cotBias='bear';cotSub='BTC '+btcChange.toFixed(1)+'% → Спекулянти Short';}
+  else{cotSub='BTC '+btcChange.toFixed(1)+'% нейтрально';}
+
+  // Sentiment 0-100
   var sentiment=50;
   if(riskMode==='on')sentiment=70;
   if(riskMode==='off')sentiment=25;
-  if(vixVal>30)sentiment=Math.min(sentiment,20);
-  if(vixVal<14)sentiment=Math.max(sentiment,65);
- 
-  return{dxyDir:dxyDir,dxyChange:dxyChange.toFixed(2),riskMode:riskMode,vixText:vixText,
-    goldBias:goldBias,goldSub:goldSub,eurBias:eurBias,eurSub:eurSub,
+  if(vixHigh)sentiment=Math.min(sentiment,30);
+  if(vixLow)sentiment=Math.max(sentiment,65);
+
+  return{
+    dxyDir:dxyDir,dxyChange:(dxyChange>=0?'+':'')+dxyChange.toFixed(2),
+    riskMode:riskMode,vixText:vixText,vixHigh:vixHigh,
+    goldBias:goldBias,goldSub:goldSub,
+    eurBias:eurBias,eurSub:eurSub,
     cotBias:cotBias,cotSub:cotSub,sentiment:sentiment,
     faAlignedXau:goldBias!=='neutral',faAlignedEur:eurBias!=='neutral',
-    xauFaDir:goldBias,eurFaDir:eurBias};
+    xauFaDir:goldBias,eurFaDir:eurBias,
+    btcChange:btcChange
+  };
 }
- 
+
 function renderFundamentals(fa){
   function setMacro(id,val,cls,sub,subId){
     var el=document.getElementById(id);
     if(el){el.textContent=val;el.className='macro-val '+cls;}
     if(subId){var s=document.getElementById(subId);if(s)s.textContent=sub||'';}
   }
-  var dxyLabel=fa.dxyDir==='bull'?'Зростає ↑':fa.dxyDir==='bear'?'Падає ↓':'Нейтральний';
-  setMacro('dxyTrend',dxyLabel+(fa.dxyChange?(' '+fa.dxyChange+'%'):''),fa.dxyDir==='bull'?'bear':fa.dxyDir==='bear'?'bull':'neutral','DXY індекс долара','dxySub');
+  setMacro('dxyTrend','DXY proxy '+fa.dxyChange+'%',fa.dxyDir==='bull'?'bear':fa.dxyDir==='bear'?'bull':'neutral','EUR/USD інверсія','dxySub');
   var riskLabel=fa.riskMode==='on'?'Risk-ON 🟢':fa.riskMode==='off'?'Risk-OFF 🔴':'Нейтральний';
-  setMacro('riskMode',riskLabel,'','','riskSub');
-  setMacro('vixProxy',fa.vixText,fa.vixText>25?'bear':fa.vixText<16?'bull':'neutral');
+  setMacro('riskMode',riskLabel,'','BTC + EUR сигнал','riskSub');
+  setMacro('vixProxy',fa.vixText,fa.vixHigh?'bear':'bull','BTC 4H ATR %');
   setMacro('goldFaBias',fa.goldBias==='bull'?'Бичачий ↑':fa.goldBias==='bear'?'Ведмежий ↓':'Нейтральний',fa.goldBias,fa.goldSub,'goldFaSub');
   setMacro('eurFaBias',fa.eurBias==='bull'?'Бичачий ↑':fa.eurBias==='bear'?'Ведмежий ↓':'Нейтральний',fa.eurBias,fa.eurSub,'eurFaSub');
   setMacro('cotProxy',fa.cotBias==='bull'?'Long ↑':fa.cotBias==='bear'?'Short ↓':'Нейтральний',fa.cotBias,fa.cotSub,'cotSub');
- 
+
   var fill=document.getElementById('sentimentFill');
   if(fill){
     fill.style.width=fa.sentiment+'%';
@@ -601,11 +607,11 @@ function renderFundamentals(fa){
   }
   var sLbl=document.getElementById('sentimentLabel');
   if(sLbl)sLbl.textContent=fa.sentiment>60?'Risk-ON':fa.sentiment<35?'Risk-OFF':'Нейтральний';
- 
+
   var t=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit'});
   var ft=document.getElementById('faUpdTime');if(ft)ft.textContent=t;
 }
- 
+
 // ── Economic Events (today, hardcoded schedule with dynamic highlighting) ──
 var WEEKLY_EVENTS=[
   // Mon
@@ -632,18 +638,18 @@ var WEEKLY_EVENTS=[
   {day:0,time:'—',name:'US10Y Yield Watch',impact:'high',currency:'USD'},
   {day:0,time:'—',name:'Gold COT Report (Fri 22:30)',impact:'med',currency:'XAU'},
 ];
- 
+
 function renderEvents(){
   var kyNow=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Kiev'}));
   var dow=kyNow.getDay(); // 0=Sun,1=Mon...
   var nowMin=kyNow.getHours()*60+kyNow.getMinutes();
- 
+
   var todayEvents=WEEKLY_EVENTS.filter(function(e){return e.day===dow||e.day===0;});
   if(!todayEvents.length){
     document.getElementById('eventsList').innerHTML='<div style="font-size:10px;color:var(--muted);padding:10px 0">📭 Сьогодні немає важливих подій.</div>';
     return;
   }
- 
+
   var html=todayEvents.map(function(e){
     var evMin=e.time!=='—'?(parseInt(e.time.split(':')[0])*60+parseInt(e.time.split(':')[1])):0;
     var isPast=e.time!=='—'&&evMin<nowMin;
@@ -661,7 +667,7 @@ function renderEvents(){
   }).join('');
   document.getElementById('eventsList').innerHTML=html;
 }
- 
+
 // ── PRICE ACTION ENGINE ────────────────────────────────────────────────────
 function detectPA(cc){
   var patterns=[];
@@ -669,7 +675,7 @@ function detectPA(cc){
   var c0=cc[0],c1=cc[1],c2=cc[2];
   var body0=Math.abs(c0.c-c0.o),body1=Math.abs(c1.c-c1.o),body2=Math.abs(c2.c-c2.o);
   var bull0=c0.c>c0.o,bear0=c0.c<c0.o,bull1=c1.c>c1.o,bear1=c1.c<c1.o;
- 
+
   if(bull0&&bear1&&c0.o<c1.c&&c0.c>c1.o&&body0>body1*1.2)patterns.push({name:'Bullish Engulfing',type:'bull',strength:90});
   if(bear0&&bull1&&c0.o>c1.c&&c0.c<c1.o&&body0>body1*1.2)patterns.push({name:'Bearish Engulfing',type:'bear',strength:90});
   if(bull0){var lw=Math.min(c0.c,c0.o)-c0.l,uw=c0.h-Math.max(c0.c,c0.o);if(lw>body0*2&&uw<body0*0.5)patterns.push({name:'Hammer',type:'bull',strength:80});}
@@ -688,30 +694,30 @@ function detectPA(cc){
 }
 function paConfirms(patterns,dir){if(!patterns.length)return false;var top=patterns[0];return(dir==='bull'&&top.type==='bull')||(dir==='bear'&&top.type==='bear');}
 function paScore(patterns,dir){var score=0;patterns.forEach(function(p){if(p.type===dir)score+=p.strength;else if(p.type==='neutral')score+=p.strength*0.3;else score-=20;});return Math.max(0,Math.min(100,score));}
- 
+
 // ── Main Analysis ──────────────────────────────────────────────────────────
 function analyze(c15,c1h,c4h,cDay,q,dp,fa){
   var fmt=function(n){return(+n).toFixed(dp);};
   var price=q.price;
- 
+
   var biasDay=htfBias(cDay),bias4h=htfBias(c4h),bias1h=htfBias(c1h);
   var bulls=[biasDay,bias4h,bias1h].filter(function(b){return b==='bull';}).length;
   var bears=[biasDay,bias4h,bias1h].filter(function(b){return b==='bear';}).length;
   var master=bulls>=2?'bull':bears>=2?'bear':'neutral';
- 
+
   var atr4h=calcATR(c4h,14);
   var fvg4h=detFVG(c4h),ob4h=detOB(c4h),ob1h=detOB(c1h),rb1h=detRB(c1h);
   var sweep=detSweep(c15);
   var swing1h=swingPts(c1h,15),swingDay=swingPts(cDay,25);
   var bos1h=(master==='bull'&&swing1h.highs.length&&price>swing1h.highs[0])||(master==='bear'&&swing1h.lows.length&&price<swing1h.lows[0]);
   var choch=sweep.swept&&sweep.dir===master&&bos1h;
- 
+
   var pa1h=detectPA(c1h),pa4h=detectPA(c4h);
   var paDir=master==='bull'?'bull':master==='bear'?'bear':'neutral';
   var pa1hOk=paConfirms(pa1h,paDir),pa4hOk=paConfirms(pa4h,paDir);
   var paScoreVal=Math.round((paScore(pa1h,paDir)+paScore(pa4h,paDir))/2);
   var paConfirmed=pa1hOk||pa4hOk;
- 
+
   // Order Flow
   var of4h=calcOrderFlow(c4h);
   var of1h=calcOrderFlow(c1h);
@@ -719,7 +725,7 @@ function analyze(c15,c1h,c4h,cDay,q,dp,fa){
   var ofScore=0;
   if(ofAligned)ofScore++;
   if(of4h.imbalance&&((master==='bull'&&c4h[0]&&c4h[0].c>c4h[0].o)||(master==='bear'&&c4h[0]&&c4h[0].c<c4h[0].o)))ofScore++;
- 
+
   // Fundamental alignment
   var faScore=0;
   if(fa){
@@ -727,7 +733,7 @@ function analyze(c15,c1h,c4h,cDay,q,dp,fa){
     if(faDir===master)faScore=2;
     else if(faDir==='neutral')faScore=1;
   }
- 
+
   // Entry zone
   var relevantOB=null,relevantFVG=null;
   if(master==='bull'){
@@ -747,18 +753,18 @@ function analyze(c15,c1h,c4h,cDay,q,dp,fa){
   var tp1,tp2;
   if(master==='bull'){var upFVGs=fvg4h.filter(function(z){return z.type==='bear'&&z.bot>price;});tp1=upFVGs.length?upFVGs[0].bot:price+atr4h*2;tp2=swingDay.highs.length?swingDay.highs[0]:price+atr4h*5;}
   else{var dnFVGs=fvg4h.filter(function(z){return z.type==='bull'&&z.top<price;});tp1=dnFVGs.length?dnFVGs[0].top:price-atr4h*2;tp2=swingDay.lows.length?swingDay.lows[0]:price-atr4h*5;}
- 
+
   var risk=Math.abs(entry-sl)||atr4h;
   var rr1=Math.abs(tp1-entry)/risk,rr2=Math.abs(tp2-entry)/risk;
   var rrOk=rr2>=3;
   var htfOk=bulls>=2||bears>=2;
   var zoneOk=ob4h.length>0||fvg4h.length>0;
- 
+
   // Score: SMC 6 + PA 2 + FA 2 + OF 2 = 12 total
   var smcScore=[htfOk,zoneOk,sweep.swept,choch,rb1h.length>0,rrOk].filter(Boolean).length;
   var paPoints=(pa1hOk?1:0)+(pa4hOk?1:0);
   var totalScore=smcScore+paPoints+faScore+ofScore;
- 
+
   return{
     master:master,biasDay:biasDay,bias4h:bias4h,bias1h:bias1h,
     atr4h:atr4h,fvg4h:fvg4h,ob4h:ob4h,ob1h:ob1h,rb1h:rb1h,
@@ -776,7 +782,7 @@ function analyze(c15,c1h,c4h,cDay,q,dp,fa){
         ssl:swingDay.lows.length?fmt(swingDay.lows[0]):'—'}
   };
 }
- 
+
 function mkSignal(pair,a){
   var t=new Date().toLocaleString('uk-UA',{timeZone:'Europe/Kiev',hour:'2-digit',minute:'2-digit'});
   if(a.totalScore>=8&&a.master!=='neutral'){
@@ -807,9 +813,9 @@ function mkSignal(pair,a){
     lv:a.lv,time:t,smcScore:a.smcScore,paPoints:a.paPoints,faScore:a.faScore,ofScore:a.ofScore,totalScore:a.totalScore,rr2:a.rr2,
     pa1h:a.pa1h,pa4h:a.pa4h,paConfirmed:a.paConfirmed,of4h:a.of4h};
 }
- 
+
 function rrCls(rr){return rr>=3?'good':rr>=2?'ok':'bad';}
- 
+
 function sigCard(s){
   // PA box
   var allPA=[];
@@ -821,7 +827,7 @@ function sigCard(s){
     allPA.slice(0,5).forEach(function(x){paHTML+='<span class="pa-pat '+x.p.type+'">'+x.tf+' · '+x.p.name+'</span>';});
     paHTML+='</div></div>';
   }
- 
+
   // FA box
   var faHTML='';
   if(s.faScore!==undefined){
@@ -836,7 +842,7 @@ function sigCard(s){
         '<div class="fa-item"><div class="fa-label">DXY</div><div class="fa-value na">'+dxyLabel+'</div><div class="fa-sub">'+riskLabel+'</div></div>'+
       '</div></div>';
   }
- 
+
   // Order Flow box
   var ofHTML='';
   if(s.of4h){
@@ -862,7 +868,7 @@ function sigCard(s){
       (ofTagsHTML?'<div class="of-tags">'+ofTagsHTML+'</div>':'')+
     '</div>';
   }
- 
+
   var lvlGrid=s.dir!=='WAIT'?
     '<div class="lvl-grid">'+
     '<div class="lvl-box"><div class="lvl-lbl">Entry · 4H Zone</div><div class="lvl-val entry">'+s.lv.entry+'</div></div>'+
@@ -870,7 +876,7 @@ function sigCard(s){
     '<div class="lvl-box"><div class="lvl-lbl">TP1 · 4H Liq</div><div class="lvl-val tp1">'+s.lv.tp1+'</div></div>'+
     '<div class="lvl-box"><div class="lvl-lbl">TP2 · Daily Swing</div><div class="lvl-val tp2">'+s.lv.tp2+'</div></div>'+
     '</div>':'';
- 
+
   var tags=s.dir!=='WAIT'?
     '<div class="sc-tags">'+
     '<span class="tag ok">SMC '+s.smcScore+'/6</span>'+
@@ -880,7 +886,7 @@ function sigCard(s){
     '<span class="tag '+(+s.lv.rr2>=3?'ok':'warn')+'">RR 1:'+s.lv.rr2+'</span>'+
     (s.paConfirmed?'<span class="tag pa">PA ✓</span>':'<span class="tag warn">PA ✗</span>')+
     '</div>':'';
- 
+
   return '<div class="sc '+s.dir.toLowerCase()+'">'+
     '<div class="sc-head">'+
       '<div class="sc-hl">'+
@@ -902,12 +908,12 @@ function sigCard(s){
     '<div class="sc-desc">'+s.desc+tags+'</div>'+
   '</div>';
 }
- 
+
 function renderBias(id,bd,b4,b1){
   var mk=function(tf,b){return '<span class="btag '+b+'"><span class="tf-lbl">'+tf+'</span>'+b.toUpperCase()+'</span>';};
   document.getElementById(id).innerHTML=mk('D',bd)+mk('4H',b4)+mk('1H',b1);
 }
- 
+
 function renderCL(id,sid,items,total){
   var html='';
   items.forEach(function(i){
@@ -922,7 +928,7 @@ function renderCL(id,sid,items,total){
   el.textContent=total+'/12';
   el.className='sbadge '+(total>=8?'high':total>=5?'mid':'low');
 }
- 
+
 function renderZones(xa,ea,xq,eq){
   var rows=[];
   function addZone(pair,type,lv,tf,dist,paPat,str,col){rows.push({pair:pair,type:type,lv:lv,tf:tf,dist:dist,paPat:paPat,str:str,col:col});}
@@ -934,7 +940,7 @@ function renderZones(xa,ea,xq,eq){
   ea.fvg4h.slice(0,1).forEach(function(z){var mid=(z.top+z.bot)/2;addZone('EUR/USD','fvg',mid.toFixed(5),'4H',(Math.abs(eq.price-mid)*10000).toFixed(0)+' pip',ea.pa4h.length?ea.pa4h[0].name:'—',68,'var(--accent2)');});
   if(ea.lv.bsl!=='—')addZone('EUR/USD','liq',ea.lv.bsl,'Daily','↑ Target','—',65,'var(--red)');
   if(ea.lv.ssl!=='—')addZone('EUR/USD','liq',ea.lv.ssl,'Daily','↓ Target','—',65,'var(--red)');
- 
+
   document.getElementById('zones').innerHTML=rows.length?rows.map(function(z){
     return '<tr>'+
       '<td style="color:'+(z.pair==='XAU/USD'?'var(--yellow)':'var(--accent)')+';font-weight:700">'+z.pair+'</td>'+
@@ -947,37 +953,41 @@ function renderZones(xa,ea,xq,eq){
     '</tr>';
   }).join(''):'<tr><td colspan="7" style="color:var(--muted);padding:16px;text-align:center">—</td></tr>';
 }
- 
+
 function showErr(m){var e=document.getElementById('errBox');e.textContent='⚠ '+m;e.style.display='block';}
 function hideErr(){document.getElementById('errBox').style.display='none';}
- 
+
 function fmtVol(v){if(!v)return'—';if(v>1e9)return(v/1e9).toFixed(1)+'B';if(v>1e6)return(v/1e6).toFixed(1)+'M';if(v>1e3)return(v/1e3).toFixed(0)+'K';return v;}
- 
+
 function runAnalysis(){
   hideErr();
   document.getElementById('spin').classList.add('on');
-  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження...</div>';
+  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження з Binance...</div>';
   renderEvents();
- 
+
+  // Binance Futures:
+  // XAUUSDT = XAU/USD Gold futures
+  // EURUSDT = EUR/USD futures
+  // 15m: 96 свічок ≈ 1 день | 1h: 120 свічок ≈ 5 днів | 1d: 120 свічок ≈ 4 місяці
   Promise.all([
     loadFundamentals(),
-    yahooFetch('GC=F','15m','5d'),
-    yahooFetch('GC=F','1h','60d'),
-    yahooFetch('GC=F','1d','1y'),
-    yahooQuote('GC=F'),
-    yahooFetch('EURUSD=X','15m','5d'),
-    yahooFetch('EURUSD=X','1h','60d'),
-    yahooFetch('EURUSD=X','1d','1y'),
-    yahooQuote('EURUSD=X')
+    bnFetch('XAUUSDT','15m',96),
+    bnFetch('XAUUSDT','1h',120),
+    bnFetch('XAUUSDT','1d',120),
+    bnQuote('XAUUSDT'),
+    bnFetch('EURUSDT','15m',96),
+    bnFetch('EURUSDT','1h',120),
+    bnFetch('EURUSDT','1d',120),
+    bnQuote('EURUSDT')
   ]).then(function(res){
     var x15=res[1],x1h=res[2],xDay=res[3],xq=res[4];
     var e15=res[5],e1h=res[6],eDay=res[7],eq=res[8];
     var x4h=make4h(x1h),e4h=make4h(e1h);
- 
+
     // Fundamental
     var fa=calcFundamentals('both');
     renderFundamentals(fa);
- 
+
     document.getElementById('xauP').textContent=xq.price.toFixed(2);
     document.getElementById('eurP').textContent=eq.price.toFixed(5);
     document.getElementById('xauH').textContent=xq.high.toFixed(2);
@@ -988,19 +998,18 @@ function runAnalysis(){
     document.getElementById('eurVol').textContent=fmtVol(eq.volume);
     function setChg(id,v){var e=document.getElementById(id);e.textContent=(v>=0?'+':'')+v.toFixed(2)+'%';e.className='pc-chg '+(v>=0?'up':'dn');}
     setChg('xauC',xq.change);setChg('eurC',eq.change);
- 
+
     var xa=analyze(x15,x1h,x4h,xDay,xq,2,fa);
     var ea=analyze(e15,e1h,e4h,eDay,eq,5,fa);
- 
+
     document.getElementById('xauATR').textContent=xa.atr4h.toFixed(2)+' pts';
     document.getElementById('eurATR').textContent=(ea.atr4h*10000).toFixed(1)+' pip';
     renderBias('xauBias',xa.biasDay,xa.bias4h,xa.bias1h);
     renderBias('eurBias',ea.biasDay,ea.bias4h,ea.bias1h);
- 
+
     document.getElementById('feed').innerHTML=
       sigCard(mkSignal('XAUUSD',xa))+sigCard(mkSignal('EURUSD',ea));
- 
-    // Checklists — тепер 12 балів
+
     renderCL('xauCL','xauSc',[
       {section:'SMC / ICT'},
       {label:'Daily+4H+1H bias aligned',ok:xa.htfOk,sub:xa.biasDay+' / '+xa.bias4h+' / '+xa.bias1h},
@@ -1018,7 +1027,7 @@ function runAnalysis(){
       {label:'4H OF Delta aligned',ok:xa.ofAligned,of:true,sub:'Delta: '+(xa.of4h.delta>=0?'+':'')+xa.of4h.delta+'% · Pressure: '+xa.of4h.buyPressure+'%'},
       {label:'Volume Imbalance/Absorption',ok:xa.of4h.imbalance||xa.of4h.absorption,of:true,sub:xa.of4h.imbalance?'Imbalance ✓':xa.of4h.absorption?'Absorption ✓':'Немає'},
     ],xa.totalScore);
- 
+
     renderCL('eurCL','eurSc',[
       {section:'SMC / ICT'},
       {label:'Daily+4H+1H bias aligned',ok:ea.htfOk,sub:ea.biasDay+' / '+ea.bias4h+' / '+ea.bias1h},
@@ -1036,23 +1045,23 @@ function runAnalysis(){
       {label:'4H OF Delta aligned',ok:ea.ofAligned,of:true,sub:'Delta: '+(ea.of4h.delta>=0?'+':'')+ea.of4h.delta+'% · Pressure: '+ea.of4h.buyPressure+'%'},
       {label:'Volume Imbalance/Absorption',ok:ea.of4h.imbalance||ea.of4h.absorption,of:true,sub:ea.of4h.imbalance?'Imbalance ✓':ea.of4h.absorption?'Absorption ✓':'Немає'},
     ],ea.totalScore);
- 
+
     renderZones(xa,ea,xq,eq);
- 
+
     var now=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev'});
-    document.getElementById('lastUpd').textContent='✅ Yahoo Finance · '+now+' KY · auto 5хв · Score /12';
+    document.getElementById('lastUpd').textContent='✅ Binance Futures · '+now+' KY · реальний час · оновлення 1хв';
     document.getElementById('spin').classList.remove('on');
- 
+
   }).catch(function(err){
-    showErr('Помилка: '+err.message+'. Спробуйте натиснути ↻ Оновити.');
-    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Помилка завантаження</div>';
+    showErr('Помилка Binance API: '+err.message+'. Перевірте інтернет-з\'єднання.');
+    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Помилка завантаження з Binance</div>';
     document.getElementById('spin').classList.remove('on');
   });
 }
- 
+
 runAnalysis();
-setInterval(runAnalysis,5*60*1000);
-setInterval(renderEvents,60*1000); // оновлюємо події щохвилини
+setInterval(runAnalysis,60*1000); // Binance real-time — оновлення кожну хвилину
+setInterval(renderEvents,60*1000);
 </script>
 </body>
 </html>
