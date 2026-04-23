@@ -361,39 +361,61 @@ function clearKey(){
   document.getElementById('keyStatus').style.color='var(--red)';
 }
 
-// ── Twelve Data API (реальний час, XAU/USD і EUR/USD підтримуються) ────────
-// Безкоштовна реєстрація: https://twelvedata.com — 800 запитів/день
-// interval: '15min','1h','4h','1day'   outputsize: кількість свічок
+// ── Twelve Data — BATCH запити (мінімум кредитів) ─────────────────────────
+// Безкоштовний план: 8 кредитів/хв, 800/день
+// Batch: symbol=XAU/USD,EUR/USD → 1 кредит замість 2
+// Стратегія: 3 запити на все оновлення (замість 10):
+//   1. batch time_series 15min  (XAU+EUR) = 1 кредит
+//   2. batch time_series 1h     (XAU+EUR) = 1 кредит
+//   3. batch time_series 1day   (XAU+EUR) = 1 кредит
+//   4. batch quote              (XAU+EUR) = 1 кредит
+// Разом: 4 кредити за оновлення (замість 22)
+// 4H свічки робимо з 1H через make4h — не потрібен окремий запит
 
-function tdFetch(symbol,interval,outputsize){
-  var url='https://api.twelvedata.com/time_series?symbol='+encodeURIComponent(symbol)+
+function tdBatchSeries(symbols, interval, outputsize){
+  // symbols: масив рядків ['XAU/USD','EUR/USD']
+  var sym=symbols.join(',');
+  var url='https://api.twelvedata.com/time_series?symbol='+encodeURIComponent(sym)+
     '&interval='+interval+'&outputsize='+outputsize+'&apikey='+TD_KEY+'&format=JSON';
   return fetch(url,{cache:'no-store'})
     .then(function(r){if(!r.ok)throw new Error('TD HTTP '+r.status);return r.json();})
     .then(function(d){
+      // Якщо один символ — d.values; якщо кілька — d['XAU/USD'].values і т.д.
       if(d.status==='error')throw new Error('TD: '+d.message);
-      if(!d.values||!d.values.length)throw new Error('TD: no data for '+symbol);
-      // Twelve Data повертає newest-first
-      return d.values.map(function(v){
-        return{t:new Date(v.datetime).getTime()/1000,o:+v.open,h:+v.high,l:+v.low,c:+v.close,v:+(v.volume||0)};
+      var result={};
+      symbols.forEach(function(s){
+        var src=symbols.length===1?d:(d[s]||{});
+        if(src.status==='error')throw new Error('TD '+s+': '+src.message);
+        var vals=src.values||[];
+        result[s]=vals.map(function(v){
+          return{t:new Date(v.datetime).getTime()/1000,o:+v.open,h:+v.high,l:+v.low,c:+v.close,v:+(v.volume||0)};
+        });
       });
+      return result;
     });
 }
 
-function tdQuote(symbol){
-  var url='https://api.twelvedata.com/quote?symbol='+encodeURIComponent(symbol)+'&apikey='+TD_KEY;
+function tdBatchQuote(symbols){
+  var sym=symbols.join(',');
+  var url='https://api.twelvedata.com/quote?symbol='+encodeURIComponent(sym)+'&apikey='+TD_KEY;
   return fetch(url,{cache:'no-store'})
     .then(function(r){return r.json();})
     .then(function(d){
       if(d.status==='error')throw new Error('TD quote: '+d.message);
-      var price=+d.close;
-      var prev=+d.previous_close||price;
-      return{
-        price:price,
-        change:((price-prev)/prev)*100,
-        high:+d.high,low:+d.low,open:+d.open,
-        prev:prev,volume:+(d.volume||0),ts:Date.now()
-      };
+      var result={};
+      symbols.forEach(function(s){
+        var src=symbols.length===1?d:(d[s]||{});
+        if(!src||src.status==='error')throw new Error('TD quote '+s+': '+(src&&src.message||'no data'));
+        var price=+src.close;
+        var prev=+src.previous_close||price;
+        result[s]={
+          price:price,
+          change:((price-prev)/prev)*100,
+          high:+src.high,low:+src.low,open:+src.open,
+          prev:prev,volume:+(src.volume||0),ts:Date.now()
+        };
+      });
+      return result;
     });
 }
 
@@ -428,25 +450,7 @@ function bnSpotQuote(symbol){
     };
   });
 }
-// ── Unified fetch: Twelve Data якщо є ключ, інакше error ──────────────────
-function fetchCandles(tdSymbol,bnSymbol,interval,size){
-  // interval: TD uses '15min','1h','4h','1day'; BN uses '15m','1h','4h','1d'
-  if(TD_KEY){
-    return tdFetch(tdSymbol,interval,size);
-  }
-  // Fallback: Binance Spot (тільки для EUR/BTC, не XAU)
-  if(bnSymbol){
-    var bnInt=interval.replace('min','m').replace('day','d');
-    return bnSpotFetch(bnSymbol,bnInt,size);
-  }
-  return Promise.reject(new Error('Немає API ключа і немає Binance fallback для '+tdSymbol));
-}
 
-function fetchQuote(tdSymbol,bnSymbol){
-  if(TD_KEY) return tdQuote(tdSymbol);
-  if(bnSymbol) return bnSpotQuote(bnSymbol);
-  return Promise.reject(new Error('Немає API ключа'));
-}
 
 
 function make4h(c1h){
@@ -1052,7 +1056,6 @@ function fmtVol(v){if(!v)return'—';if(v>1e9)return(v/1e9).toFixed(1)+'B';if(v>
 function runAnalysis(){
   hideErr();
 
-  // Якщо ключа немає — показуємо модальне вікно
   if(!TD_KEY){
     showKeyModal();
     document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">🔑 Введіть API ключ Twelve Data для завантаження даних</div>';
@@ -1060,28 +1063,26 @@ function runAnalysis(){
   }
 
   document.getElementById('spin').classList.add('on');
-  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження з Twelve Data...</div>';
+  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження...</div>';
   renderEvents();
 
-  // Twelve Data symbols: 'XAU/USD', 'EUR/USD'
-  // intervals: '15min','1h','4h','1day'
+  var SYMS=['XAU/USD','EUR/USD'];
+
+  // Всього 4 кредити за оновлення (замість 22):
+  // batch 15min + batch 1h + batch 1day + batch quote
+  // 4H — будуємо з 1H через make4h
   Promise.all([
-    loadFundamentals(),
-    fetchCandles('XAU/USD',null,'15min',96),
-    fetchCandles('XAU/USD',null,'1h',120),
-    fetchCandles('XAU/USD',null,'4h',80),
-    fetchCandles('XAU/USD',null,'1day',120),
-    fetchQuote('XAU/USD',null),
-    fetchCandles('EUR/USD','EURUSDT','15min',96),
-    fetchCandles('EUR/USD','EURUSDT','1h',120),
-    fetchCandles('EUR/USD','EURUSDT','4h',80),
-    fetchCandles('EUR/USD','EURUSDT','1day',120),
-    fetchQuote('EUR/USD','EURUSDT')
+    loadFundamentals(),                          // Binance Spot BTC — 0 TD кредитів
+    tdBatchSeries(SYMS,'15min',96),              // 1 кредит
+    tdBatchSeries(SYMS,'1h',120),               // 1 кредит
+    tdBatchSeries(SYMS,'1day',120),             // 1 кредит
+    tdBatchQuote(SYMS)                           // 1 кредит
   ]).then(function(res){
-    var x15=res[1],x1h=res[2],x4h=res[3],xDay=res[4],xq=res[5];
-    var e15=res[6],e1h=res[7],e4h=res[8],eDay=res[9],eq=res[10];
-    // Twelve Data вже дає 4h свічки напряму — не треба make4h
-    // Але залишаємо make4h як fallback для сумісності якщо є тільки 1h
+    var s15=res[1], s1h=res[2], sDay=res[3], sq=res[4];
+
+    var x15=s15['XAU/USD'], x1h=s1h['XAU/USD'], xDay=sDay['XAU/USD'], xq=sq['XAU/USD'];
+    var e15=s15['EUR/USD'], e1h=s1h['EUR/USD'], eDay=sDay['EUR/USD'], eq=sq['EUR/USD'];
+    var x4h=make4h(x1h), e4h=make4h(e1h);
 
     var fa=calcFundamentals('both');
     renderFundamentals(fa);
@@ -1147,28 +1148,28 @@ function runAnalysis(){
     renderZones(xa,ea,xq,eq);
 
     var now=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev'});
-    document.getElementById('lastUpd').textContent='✅ Twelve Data · '+now+' KY · реальний час · оновлення 1хв';
-
-    // Оновлюємо статус ключа
+    document.getElementById('lastUpd').textContent='✅ Twelve Data · '+now+' KY · 4 кредити/оновл · наст. через 5хв';
     var ks=document.getElementById('keyStatus');
     if(ks){ks.textContent='✓ Ключ активний';ks.style.color='var(--green)';}
     document.getElementById('spin').classList.remove('on');
 
   }).catch(function(err){
-    showErr('Помилка: '+err.message);
-    // Якщо помилка авторизації — просимо ключ
-    if(err.message&&(err.message.indexOf('401')>-1||err.message.indexOf('apikey')>-1||err.message.indexOf('invalid')>-1)){
-      TD_KEY='';localStorage.removeItem('tdApiKey');
-      showKeyModal();
+    var msg=err.message||'';
+    showErr('Помилка: '+msg);
+    if(msg.indexOf('credits')>-1||msg.indexOf('minute')>-1){
+      showErr('⏳ Вичерпано кредити на цю хвилину. Автооновлення через 60 сек.');
     }
-    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ '+err.message+'</div>';
+    if(msg.indexOf('401')>-1||msg.indexOf('apikey')>-1||msg.indexOf('invalid')>-1){
+      TD_KEY='';localStorage.removeItem('tdApiKey');showKeyModal();
+    }
+    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ '+msg+'</div>';
     document.getElementById('spin').classList.remove('on');
   });
 }
 
 runAnalysis();
-setInterval(runAnalysis,60*1000);
-setInterval(renderEvents,60*1000);
+setInterval(runAnalysis, 5*60*1000); // 5 хв = 4 кредити / оновлення, вкладається у 800/день
+setInterval(renderEvents, 60*1000);
 
 // Показуємо збережений ключ в полі
 if(TD_KEY){
