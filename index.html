@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
@@ -12,198 +13,233 @@
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
   .wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px}
 
-  header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid var(--border);margin-bottom:20px}
-  .logo{font-family:var(--sans);font-weight:800;font-size:20px}
-  .logo em{color:var(--accent);font-style:normal}
-  .logo small{color:var(--purple);font-size:12px;font-weight:400;margin-left:6px}
-  .hdr-r{display:flex;align-items:center;gap:14px}
-  .sess{font-size:11px;padding:4px 10px;border-radius:2px;border:1px solid;letter-spacing:1px;text-transform:uppercase}
-  .sess.london{border-color:var(--accent);color:var(--accent)}.sess.ny{border-color:var(--yellow);color:var(--yellow)}.sess.off{border-color:var(--muted);color:var(--muted)}
-  .clock{font-size:12px;color:var(--muted)}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid var(–border);margin-bottom:20px}
+.logo{font-family:var(–sans);font-weight:800;font-size:20px}
+.logo em{color:var(–accent);font-style:normal}
+.logo small{color:var(–purple);font-size:12px;font-weight:400;margin-left:6px}
+.hdr-r{display:flex;align-items:center;gap:14px}
+.sess{font-size:11px;padding:4px 10px;border-radius:2px;border:1px solid;letter-spacing:1px;text-transform:uppercase}
+.sess.london{border-color:var(–accent);color:var(–accent)}.sess.ny{border-color:var(–yellow);color:var(–yellow)}.sess.off{border-color:var(–muted);color:var(–muted)}
+.clock{font-size:12px;color:var(–muted)}
 
-  .bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11px;color:var(--muted)}
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,150,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,200,150,0)}}
-  .spinner{display:none;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}.spinner.on{display:inline-block}
-  .btn{background:transparent;border:1px solid var(--border);color:var(--accent);font-family:var(--mono);font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;white-space:nowrap}
-  .btn:hover{background:var(--accent);color:var(--bg)}
-  .err-box{background:rgba(255,61,107,.08);border:1px solid rgba(255,61,107,.25);color:var(--red);font-size:11px;padding:12px 16px;margin-bottom:14px;display:none;line-height:1.6}
-  .note{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.12);color:var(--accent);font-size:10px;padding:10px 14px;margin-bottom:16px}
+.bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11px;color:var(–muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(–green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,150,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,200,150,0)}}
+.spinner{display:none;width:12px;height:12px;border:2px solid var(–border);border-top-color:var(–accent);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}.spinner.on{display:inline-block}
+.btn{background:transparent;border:1px solid var(–border);color:var(–accent);font-family:var(–mono);font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s;white-space:nowrap}
+.btn:hover{background:var(–accent);color:var(–bg)}
+.err-box{background:rgba(255,61,107,.08);border:1px solid rgba(255,61,107,.25);color:var(–red);font-size:11px;padding:12px 16px;margin-bottom:14px;display:none;line-height:1.6}
+.note{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.12);color:var(–accent);font-size:10px;padding:10px 14px;margin-bottom:16px}
 
-  /* Pair cards */
-  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-  .pc{background:var(--bg2);border:1px solid var(--border);padding:18px;position:relative;overflow:hidden}
-  .pc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-  .pc.xau::after{background:linear-gradient(90deg,var(--yellow),transparent)}
-  .pc.eur::after{background:linear-gradient(90deg,var(--accent),transparent)}
-  .pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-  .pc-name{font-family:var(--sans);font-weight:800;font-size:17px;letter-spacing:1px}
-  .pc-price{font-size:21px;font-weight:700;letter-spacing:-1px}
-  .pc-chg{font-size:11px;text-align:right;margin-top:2px}
-  .pc-chg.up{color:var(--green)}.pc-chg.dn{color:var(--red)}
-  .bias-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 6px}
-  .btag{font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:2px;text-transform:uppercase;border:1px solid}
-  .btag.bull{background:rgba(0,200,150,.12);color:var(--green);border-color:rgba(0,200,150,.3)}
-  .btag.bear{background:rgba(255,61,107,.12);color:var(--red);border-color:rgba(255,61,107,.3)}
-  .btag.neutral{background:rgba(255,209,102,.08);color:var(--yellow);border-color:rgba(255,209,102,.2)}
-  .tf-lbl{font-size:8px;color:var(--muted);margin-right:2px}
-  .pc-meta{font-size:9px;color:var(--muted);display:flex;gap:10px}
-  .pc-meta b{color:var(--text)}
+/* Pair cards */
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.pc{background:var(–bg2);border:1px solid var(–border);padding:18px;position:relative;overflow:hidden}
+.pc::after{content:’’;position:absolute;top:0;left:0;right:0;height:2px}
+.pc.xau::after{background:linear-gradient(90deg,var(–yellow),transparent)}
+.pc.eur::after{background:linear-gradient(90deg,var(–accent),transparent)}
+.pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.pc-name{font-family:var(–sans);font-weight:800;font-size:17px;letter-spacing:1px}
+.pc-price{font-size:21px;font-weight:700;letter-spacing:-1px}
+.pc-chg{font-size:11px;text-align:right;margin-top:2px}
+.pc-chg.up{color:var(–green)}.pc-chg.dn{color:var(–red)}
+.bias-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 6px}
+.btag{font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:2px;text-transform:uppercase;border:1px solid}
+.btag.bull{background:rgba(0,200,150,.12);color:var(–green);border-color:rgba(0,200,150,.3)}
+.btag.bear{background:rgba(255,61,107,.12);color:var(–red);border-color:rgba(255,61,107,.3)}
+.btag.neutral{background:rgba(255,209,102,.08);color:var(–yellow);border-color:rgba(255,209,102,.2)}
+.tf-lbl{font-size:8px;color:var(–muted);margin-right:2px}
+.pc-meta{font-size:9px;color:var(–muted);display:flex;gap:10px}
+.pc-meta b{color:var(–text)}
 
-  .stitle{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.stitle{font-family:var(–sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(–muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(–border)}
 
-  /* Signal card */
-  .feed{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
-  .sc{background:var(--bg2);border:1px solid var(--border);border-left:4px solid;padding:18px;animation:si .4s ease}
-  @keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-  .sc.buy{border-left-color:var(--green)}.sc.sell{border-left-color:var(--red)}.sc.wait{border-left-color:var(--yellow)}
+/* Signal card */
+.feed{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+.sc{background:var(–bg2);border:1px solid var(–border);border-left:4px solid;padding:18px;animation:si .4s ease}
+@keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.sc.buy{border-left-color:var(–green)}.sc.sell{border-left-color:var(–red)}.sc.wait{border-left-color:var(–yellow)}
 
-  .sc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:10px}
-  .sc-hl{display:flex;align-items:center;gap:12px}
-  .sc-dir{font-family:var(--sans);font-weight:800;font-size:18px;letter-spacing:2px;min-width:55px}
-  .sc-dir.buy{color:var(--green)}.sc-dir.sell{color:var(--red)}.sc-dir.wait{color:var(--yellow)}
-  .sc-title{font-size:13px;font-weight:700;margin-bottom:3px}
-  .sc-sub{font-size:9px;color:var(--muted)}
-  .sc-scores{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-  .sc-rr{font-size:13px;font-weight:700}
-  .sc-rr.good{color:var(--green)}.sc-rr.ok{color:var(--yellow)}.sc-rr.bad{color:var(--red)}
-  .score-pills{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-  .spill{font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid;white-space:nowrap}
-  .spill.smc{border-color:rgba(0,229,255,.3);color:var(--accent);background:rgba(0,229,255,.06)}
-  .spill.pa{border-color:rgba(185,122,255,.3);color:var(--purple);background:rgba(185,122,255,.06)}
-  .spill.fa{border-color:rgba(255,159,28,.3);color:var(--orange);background:rgba(255,159,28,.06)}
-  .spill.of{border-color:rgba(0,212,170,.3);color:var(--teal);background:rgba(0,212,170,.06)}
+.sc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:10px}
+.sc-hl{display:flex;align-items:center;gap:12px}
+.sc-dir{font-family:var(–sans);font-weight:800;font-size:18px;letter-spacing:2px;min-width:55px}
+.sc-dir.buy{color:var(–green)}.sc-dir.sell{color:var(–red)}.sc-dir.wait{color:var(–yellow)}
+.sc-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.sc-sub{font-size:9px;color:var(–muted)}
+.sc-scores{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.sc-rr{font-size:13px;font-weight:700}
+.sc-rr.good{color:var(–green)}.sc-rr.ok{color:var(–yellow)}.sc-rr.bad{color:var(–red)}
+.score-pills{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.spill{font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid;white-space:nowrap}
+.spill.smc{border-color:rgba(0,229,255,.3);color:var(–accent);background:rgba(0,229,255,.06)}
+.spill.pa{border-color:rgba(185,122,255,.3);color:var(–purple);background:rgba(185,122,255,.06)}
+.spill.fa{border-color:rgba(255,159,28,.3);color:var(–orange);background:rgba(255,159,28,.06)}
+.spill.of{border-color:rgba(0,212,170,.3);color:var(–teal);background:rgba(0,212,170,.06)}
 
-  /* Level grid */
-  .lvl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-  .lvl-box{background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center}
-  .lvl-lbl{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-  .lvl-val{font-size:12px;font-weight:700}
-  .lvl-val.entry{color:var(--accent)}.lvl-val.sl{color:var(--red)}.lvl-val.tp1{color:rgba(0,200,150,.8)}.lvl-val.tp2{color:var(--green)}
+/* Level grid */
+.lvl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.lvl-box{background:var(–bg);border:1px solid var(–border);padding:10px;text-align:center}
+.lvl-lbl{font-size:8px;color:var(–muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.lvl-val{font-size:12px;font-weight:700}
+.lvl-val.entry{color:var(–accent)}.lvl-val.sl{color:var(–red)}.lvl-val.tp1{color:rgba(0,200,150,.8)}.lvl-val.tp2{color:var(–green)}
 
-  /* PA confirmation box */
-  .pa-box{background:rgba(185,122,255,.05);border:1px solid rgba(185,122,255,.2);padding:12px 14px;margin-bottom:10px}
-  .pa-title{font-size:10px;color:var(--purple);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
-  .pa-patterns{display:flex;gap:8px;flex-wrap:wrap}
-  .pa-pat{font-size:10px;padding:3px 10px;border-radius:2px;border:1px solid}
-  .pa-pat.bull{background:rgba(0,200,150,.1);color:var(--green);border-color:rgba(0,200,150,.25)}
-  .pa-pat.bear{background:rgba(255,61,107,.08);color:var(--red);border-color:rgba(255,61,107,.2)}
-  .pa-pat.neutral{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
-  .pa-none{font-size:10px;color:var(--muted)}
+/* PA confirmation box */
+.pa-box{background:rgba(185,122,255,.05);border:1px solid rgba(185,122,255,.2);padding:12px 14px;margin-bottom:10px}
+.pa-title{font-size:10px;color:var(–purple);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.pa-patterns{display:flex;gap:8px;flex-wrap:wrap}
+.pa-pat{font-size:10px;padding:3px 10px;border-radius:2px;border:1px solid}
+.pa-pat.bull{background:rgba(0,200,150,.1);color:var(–green);border-color:rgba(0,200,150,.25)}
+.pa-pat.bear{background:rgba(255,61,107,.08);color:var(–red);border-color:rgba(255,61,107,.2)}
+.pa-pat.neutral{background:rgba(255,209,102,.06);color:var(–yellow);border-color:rgba(255,209,102,.15)}
+.pa-none{font-size:10px;color:var(–muted)}
 
-  /* Fundamental Analysis box */
-  .fa-box{background:rgba(255,159,28,.04);border:1px solid rgba(255,159,28,.2);padding:12px 14px;margin-bottom:10px}
-  .fa-title{font-size:10px;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
-  .fa-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .fa-item{background:var(--bg);border:1px solid var(--border);padding:7px 10px}
-  .fa-label{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
-  .fa-value{font-size:10px;font-weight:700}
-  .fa-value.bull{color:var(--green)}.fa-value.bear{color:var(--red)}.fa-value.neutral{color:var(--yellow)}.fa-value.na{color:var(--muted)}
-  .fa-sub{font-size:8px;color:var(--muted);margin-top:2px}
-  .events-list{margin-top:8px}
-  .ev-item{display:flex;align-items:center;gap:8px;font-size:9px;padding:4px 0;border-bottom:1px solid rgba(30,42,56,.4)}
-  .ev-item:last-child{border-bottom:none}
-  .ev-imp{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-  .ev-imp.high{background:var(--red)}.ev-imp.med{background:var(--yellow)}.ev-imp.low{background:var(--muted)}
-  .ev-time{color:var(--muted);min-width:40px}
-  .ev-name{color:var(--text);flex:1}
-  .ev-fore{color:var(--accent);min-width:50px;text-align:right}
+/* Fundamental Analysis box */
+.fa-box{background:rgba(255,159,28,.04);border:1px solid rgba(255,159,28,.2);padding:12px 14px;margin-bottom:10px}
+.fa-title{font-size:10px;color:var(–orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.fa-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fa-item{background:var(–bg);border:1px solid var(–border);padding:7px 10px}
+.fa-label{font-size:8px;color:var(–muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.fa-value{font-size:10px;font-weight:700}
+.fa-value.bull{color:var(–green)}.fa-value.bear{color:var(–red)}.fa-value.neutral{color:var(–yellow)}.fa-value.na{color:var(–muted)}
+.fa-sub{font-size:8px;color:var(–muted);margin-top:2px}
+.events-list{margin-top:8px}
+.ev-item{display:flex;align-items:center;gap:8px;font-size:9px;padding:4px 0;border-bottom:1px solid rgba(30,42,56,.4)}
+.ev-item:last-child{border-bottom:none}
+.ev-imp{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ev-imp.high{background:var(–red)}.ev-imp.med{background:var(–yellow)}.ev-imp.low{background:var(–muted)}
+.ev-time{color:var(–muted);min-width:40px}
+.ev-name{color:var(–text);flex:1}
+.ev-fore{color:var(–accent);min-width:50px;text-align:right}
 
-  /* Order Flow box */
-  .of-box{background:rgba(0,212,170,.04);border:1px solid rgba(0,212,170,.2);padding:12px 14px;margin-bottom:10px}
-  .of-title{font-size:10px;color:var(--teal);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
-  .of-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
-  .of-item{background:var(--bg);border:1px solid var(--border);padding:7px 10px;text-align:center}
-  .of-label{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
-  .of-value{font-size:11px;font-weight:700}
-  .of-value.buy{color:var(--green)}.of-value.sell{color:var(--red)}.of-value.neutral{color:var(--yellow)}
-  /* Delta bar */
-  .delta-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;position:relative;margin-top:6px}
-  .delta-fill-buy{position:absolute;left:50%;top:0;height:100%;background:var(--green);border-radius:0 3px 3px 0}
-  .delta-fill-sell{position:absolute;right:50%;top:0;height:100%;background:var(--red);border-radius:3px 0 0 3px}
-  /* Volume Profile mini */
-  .vp-mini{display:flex;gap:2px;align-items:flex-end;height:32px;margin-top:6px}
-  .vp-bar{flex:1;background:rgba(0,212,170,.3);border-radius:1px 1px 0 0;min-height:2px;position:relative}
-  .vp-bar.poc{background:var(--teal)}
-  /* Absorption / imbalance tags */
-  .of-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-  .of-tag{font-size:9px;padding:2px 8px;border-radius:2px;border:1px solid}
-  .of-tag.buy{background:rgba(0,200,150,.08);color:var(--green);border-color:rgba(0,200,150,.2)}
-  .of-tag.sell{background:rgba(255,61,107,.08);color:var(--red);border-color:rgba(255,61,107,.2)}
-  .of-tag.warn{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
+/* Order Flow box */
+.of-box{background:rgba(0,212,170,.04);border:1px solid rgba(0,212,170,.2);padding:12px 14px;margin-bottom:10px}
+.of-title{font-size:10px;color:var(–teal);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.of-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.of-item{background:var(–bg);border:1px solid var(–border);padding:7px 10px;text-align:center}
+.of-label{font-size:8px;color:var(–muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.of-value{font-size:11px;font-weight:700}
+.of-value.buy{color:var(–green)}.of-value.sell{color:var(–red)}.of-value.neutral{color:var(–yellow)}
+/* Delta bar */
+.delta-bar{height:6px;background:var(–border);border-radius:3px;overflow:hidden;position:relative;margin-top:6px}
+.delta-fill-buy{position:absolute;left:50%;top:0;height:100%;background:var(–green);border-radius:0 3px 3px 0}
+.delta-fill-sell{position:absolute;right:50%;top:0;height:100%;background:var(–red);border-radius:3px 0 0 3px}
+/* Volume Profile mini */
+.vp-mini{display:flex;gap:2px;align-items:flex-end;height:32px;margin-top:6px}
+.vp-bar{flex:1;background:rgba(0,212,170,.3);border-radius:1px 1px 0 0;min-height:2px;position:relative}
+.vp-bar.poc{background:var(–teal)}
+/* Absorption / imbalance tags */
+.of-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.of-tag{font-size:9px;padding:2px 8px;border-radius:2px;border:1px solid}
+.of-tag.buy{background:rgba(0,200,150,.08);color:var(–green);border-color:rgba(0,200,150,.2)}
+.of-tag.sell{background:rgba(255,61,107,.08);color:var(–red);border-color:rgba(255,61,107,.2)}
+.of-tag.warn{background:rgba(255,209,102,.06);color:var(–yellow);border-color:rgba(255,209,102,.15)}
 
-  .sc-desc{font-size:10px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);padding-top:10px}
-  .sc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-  .tag{font-size:9px;padding:2px 7px;border-radius:2px;border:1px solid}
-  .tag.ok{background:rgba(0,200,150,.08);color:var(--green);border-color:rgba(0,200,150,.2)}
-  .tag.pa{background:rgba(185,122,255,.08);color:var(--purple);border-color:rgba(185,122,255,.2)}
-  .tag.fa{background:rgba(255,159,28,.08);color:var(--orange);border-color:rgba(255,159,28,.2)}
-  .tag.of{background:rgba(0,212,170,.08);color:var(--teal);border-color:rgba(0,212,170,.2)}
-  .tag.warn{background:rgba(255,209,102,.06);color:var(--yellow);border-color:rgba(255,209,102,.15)}
+.sc-desc{font-size:10px;color:var(–muted);line-height:1.7;border-top:1px solid var(–border);padding-top:10px}
+.sc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:9px;padding:2px 7px;border-radius:2px;border:1px solid}
+.tag.ok{background:rgba(0,200,150,.08);color:var(–green);border-color:rgba(0,200,150,.2)}
+.tag.pa{background:rgba(185,122,255,.08);color:var(–purple);border-color:rgba(185,122,255,.2)}
+.tag.fa{background:rgba(255,159,28,.08);color:var(–orange);border-color:rgba(255,159,28,.2)}
+.tag.of{background:rgba(0,212,170,.08);color:var(–teal);border-color:rgba(0,212,170,.2)}
+.tag.warn{background:rgba(255,209,102,.06);color:var(–yellow);border-color:rgba(255,209,102,.15)}
 
-  /* Checklist */
-  .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-  .clc{background:var(--bg2);border:1px solid var(--border);padding:16px}
-  .clh{font-family:var(--sans);font-weight:600;font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .sbadge{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:2px;white-space:nowrap}
-  .sbadge.high{background:rgba(0,200,150,.15);color:var(--green)}.sbadge.mid{background:rgba(255,209,102,.1);color:var(--yellow)}.sbadge.low{background:rgba(255,61,107,.1);color:var(--red)}
-  .cl-section{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin:10px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-  .cl-section:first-child{margin-top:0}
-  .ci{display:flex;align-items:flex-start;gap:8px;font-size:10px;color:var(--muted);margin-bottom:7px;line-height:1.4}.ci.ok{color:var(--text)}
-  .cico{width:14px;height:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
-  .cico.ok{background:rgba(0,200,150,.2);color:var(--green)}
-  .cico.fail{background:rgba(255,61,107,.1);color:var(--red);border:1px solid rgba(255,61,107,.2)}
-  .cico.pa{background:rgba(185,122,255,.15);color:var(--purple)}
-  .cico.fa{background:rgba(255,159,28,.15);color:var(--orange)}
-  .cico.of{background:rgba(0,212,170,.15);color:var(--teal)}
-  .ci-sub{font-size:9px;color:var(--muted);margin-top:2px}
+/* Checklist */
+.clgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.clc{background:var(–bg2);border:1px solid var(–border);padding:16px}
+.clh{font-family:var(–sans);font-weight:600;font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sbadge{font-family:var(–mono);font-size:10px;padding:2px 7px;border-radius:2px;white-space:nowrap}
+.sbadge.high{background:rgba(0,200,150,.15);color:var(–green)}.sbadge.mid{background:rgba(255,209,102,.1);color:var(–yellow)}.sbadge.low{background:rgba(255,61,107,.1);color:var(–red)}
+.cl-section{font-size:9px;color:var(–muted);letter-spacing:1.5px;text-transform:uppercase;margin:10px 0 6px;padding-bottom:4px;border-bottom:1px solid var(–border)}
+.cl-section:first-child{margin-top:0}
+.ci{display:flex;align-items:flex-start;gap:8px;font-size:10px;color:var(–muted);margin-bottom:7px;line-height:1.4}.ci.ok{color:var(–text)}
+.cico{width:14px;height:14px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
+.cico.ok{background:rgba(0,200,150,.2);color:var(–green)}
+.cico.fail{background:rgba(255,61,107,.1);color:var(–red);border:1px solid rgba(255,61,107,.2)}
+.cico.pa{background:rgba(185,122,255,.15);color:var(–purple)}
+.cico.fa{background:rgba(255,159,28,.15);color:var(–orange)}
+.cico.of{background:rgba(0,212,170,.15);color:var(–teal)}
+.ci-sub{font-size:9px;color:var(–muted);margin-top:2px}
 
-  /* Fundamental panel */
-  .fa-panel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-  .fa-card{background:var(--bg2);border:1px solid var(--border);padding:16px;position:relative;overflow:hidden}
-  .fa-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),transparent)}
-  .fa-card-title{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:2px;color:var(--orange);text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-  .macro-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .macro-item{background:var(--bg);border:1px solid var(--border);padding:8px 10px}
-  .macro-lbl{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
-  .macro-val{font-size:11px;font-weight:700}
-  .macro-val.bull{color:var(--green)}.macro-val.bear{color:var(--red)}.macro-val.neutral{color:var(--yellow)}.macro-val.na{color:var(--muted)}
-  .macro-sub{font-size:8px;color:var(--muted);margin-top:2px}
-  .sentiment-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:10px;position:relative}
-  .sentiment-fill{height:100%;border-radius:4px;transition:width .5s ease}
+/* Fundamental panel */
+.fa-panel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.fa-card{background:var(–bg2);border:1px solid var(–border);padding:16px;position:relative;overflow:hidden}
+.fa-card::after{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(–orange),transparent)}
+.fa-card-title{font-family:var(–sans);font-size:11px;font-weight:600;letter-spacing:2px;color:var(–orange);text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.macro-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.macro-item{background:var(–bg);border:1px solid var(–border);padding:8px 10px}
+.macro-lbl{font-size:8px;color:var(–muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.macro-val{font-size:11px;font-weight:700}
+.macro-val.bull{color:var(–green)}.macro-val.bear{color:var(–red)}.macro-val.neutral{color:var(–yellow)}.macro-val.na{color:var(–muted)}
+.macro-sub{font-size:8px;color:var(–muted);margin-top:2px}
+.sentiment-bar{height:8px;background:var(–border);border-radius:4px;overflow:hidden;margin-top:10px;position:relative}
+.sentiment-fill{height:100%;border-radius:4px;transition:width .5s ease}
 
-  /* Zones table */
-  table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px}
-  th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:400;letter-spacing:1px;text-transform:uppercase;font-size:9px}
-  td{padding:9px 10px;border-bottom:1px solid rgba(30,42,56,.5)}
-  tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
-  .zt{display:inline-block;padding:2px 6px;border-radius:2px;font-size:9px;font-weight:700}
-  .zt.ob{background:rgba(0,229,255,.1);color:var(--accent)}.zt.fvg{background:rgba(255,107,53,.1);color:var(--accent2)}.zt.rb{background:rgba(255,209,102,.1);color:var(--yellow)}.zt.liq{background:rgba(255,61,107,.1);color:var(--red)}
-  .sbar{width:60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}.sfill{height:100%;border-radius:2px}
+/* Zones table */
+table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px}
+th{text-align:left;padding:8px 10px;border-bottom:1px solid var(–border);color:var(–muted);font-weight:400;letter-spacing:1px;text-transform:uppercase;font-size:9px}
+td{padding:9px 10px;border-bottom:1px solid rgba(30,42,56,.5)}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+.zt{display:inline-block;padding:2px 6px;border-radius:2px;font-size:9px;font-weight:700}
+.zt.ob{background:rgba(0,229,255,.1);color:var(–accent)}.zt.fvg{background:rgba(255,107,53,.1);color:var(–accent2)}.zt.rb{background:rgba(255,209,102,.1);color:var(–yellow)}.zt.liq{background:rgba(255,61,107,.1);color:var(–red)}
+.sbar{width:60px;height:4px;background:var(–border);border-radius:2px;overflow:hidden}.sfill{height:100%;border-radius:2px}
 
-  footer{border-top:1px solid var(--border);padding-top:14px;display:flex;justify-content:space-between;font-size:9px;color:var(--muted)}
-  @media(max-width:640px){
-    .pairs,.clgrid,.fa-panel{grid-template-columns:1fr}
-    .lvl-grid{grid-template-columns:repeat(2,1fr)}
-    .sc-head{flex-direction:column}
-    .sc-scores{flex-direction:row;align-items:center}
-    .fa-grid,.of-grid,.macro-grid{grid-template-columns:1fr}
-  }
+/* API Key Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;align-items:center;justify-content:center}
+.modal-box{background:var(–bg2);border:1px solid var(–border);padding:28px;max-width:420px;width:90%;position:relative}
+.modal-box::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(–accent),var(–purple))}
+.modal-title{font-family:var(–sans);font-weight:800;font-size:16px;margin-bottom:6px}
+.modal-desc{font-size:10px;color:var(–muted);line-height:1.7;margin-bottom:16px}
+.modal-desc a{color:var(–accent);text-decoration:none}
+.modal-input{width:100%;background:var(–bg);border:1px solid var(–border);color:var(–text);font-family:var(–mono);font-size:11px;padding:8px 12px;outline:none;margin-bottom:10px}
+.modal-input:focus{border-color:var(–accent)}
+.modal-row{display:flex;gap:8px}
+.modal-btn{flex:1;background:var(–accent);color:var(–bg);font-family:var(–mono);font-size:11px;padding:8px;cursor:pointer;border:none;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.modal-btn.sec{background:transparent;border:1px solid var(–border);color:var(–muted)}
+.modal-btn.sec:hover{border-color:var(–red);color:var(–red)}
+
+footer{border-top:1px solid var(–border);padding-top:14px;display:flex;justify-content:space-between;font-size:9px;color:var(–muted)}
+@media(max-width:640px){
+.pairs,.clgrid,.fa-panel{grid-template-columns:1fr}
+.lvl-grid{grid-template-columns:repeat(2,1fr)}
+.sc-head{flex-direction:column}
+.sc-scores{flex-direction:row;align-items:center}
+.fa-grid,.of-grid,.macro-grid{grid-template-columns:1fr}
+}
 </style>
+
 </head>
 <body>
+<!-- API Key Modal -->
+<div class="modal-overlay" id="keyModal">
+  <div class="modal-box">
+    <div class="modal-title">🔑 Twelve Data API Key</div>
+    <div class="modal-desc">
+      Для отримання реальних даних XAU/USD і EUR/USD потрібен безкоштовний ключ.<br>
+      1. Зареєструйтесь на <a href="https://twelvedata.com" target="_blank">twelvedata.com</a> (безкоштовно)<br>
+      2. Скопіюйте ваш API ключ і вставте нижче<br>
+      3. Безкоштовний план: 800 запитів/день · реальний час
+    </div>
+    <input class="modal-input" id="keyInput" type="text" placeholder="Ваш API ключ..." value="">
+    <div style="font-size:9px;margin-bottom:10px" id="keyStatus" style="color:var(--muted)">—</div>
+    <div class="modal-row">
+      <button class="modal-btn" onclick="saveKey()">✓ Зберегти і запустити</button>
+      <button class="modal-btn sec" onclick="clearKey()">✗ Очистити ключ</button>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 
 <header>
   <div class="logo">SMC<em>/</em>ICT<small>+ PA · FA · OrderFlow</small></div>
   <div class="hdr-r">
+    <button class="btn" style="font-size:10px;padding:3px 10px" onclick="showKeyModal()">🔑 API Key</button>
     <div class="sess" id="sess">—</div>
     <div class="clock" id="clock">--:--:--</div>
   </div>
 </header>
 
-<div class="note">✦ Binance Futures API · Реальний час · Без API ключа · SMC/ICT + Price Action + Fundamental + Order Flow · v7.0</div>
+<div class="note">✦ Twelve Data API · XAU/USD + EUR/USD реальний час · SMC/ICT + PA + FA + OrderFlow · v7.0 · <a href="https://twelvedata.com" target="_blank" style="color:var(--accent)">Отримати ключ безкоштовно</a></div>
 <div class="err-box" id="errBox"></div>
 
 <div class="bar">
@@ -214,6 +250,7 @@
 </div>
 
 <!-- Pair cards -->
+
 <div class="stitle">▸ HTF Bias (Daily · 4H · 1H)</div>
 <div class="pairs">
   <div class="pc xau">
@@ -233,6 +270,7 @@
 </div>
 
 <!-- Fundamental Panel -->
+
 <div class="stitle">▸ Фундаментальний аналіз</div>
 <div class="fa-panel">
   <div class="fa-card">
@@ -261,10 +299,12 @@
 </div>
 
 <!-- Signals -->
+
 <div class="stitle">▸ Сигнали (SMC + PA + FA + OrderFlow)</div>
 <div class="feed" id="feed"><div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження...</div></div>
 
 <!-- Checklist -->
+
 <div class="stitle">▸ Checklist (SMC + PA + FA + OF)</div>
 <div class="clgrid">
   <div class="clc"><div class="clh">XAU/USD <div class="sbadge" id="xauSc">—</div></div><div id="xauCL"></div></div>
@@ -272,6 +312,7 @@
 </div>
 
 <!-- Zones -->
+
 <div class="stitle">▸ HTF Зони</div>
 <table>
   <thead><tr><th>Пара</th><th>Тип</th><th>Рівень</th><th>TF</th><th>Відстань</th><th>PA патерн</th><th>Сила</th></tr></thead>
@@ -299,32 +340,78 @@ function tick(){
 }
 setInterval(tick,1000);tick();
 
-// ── Binance Futures API — реальний час, без проксі, без ключа ──────────────
-// XAUUSDT = Gold/USD  |  EURUSDT = EUR/USD
-// Base: https://fapi.binance.com (Futures — має XAUUSDT і EURUSDT)
+// ── API Key UI ──────────────────────────────────────────────────────────────
+var TD_KEY=localStorage.getItem('tdApiKey')||'';
 
-var BNBASE='https://fapi.binance.com';
+function showKeyModal(){
+  document.getElementById('keyModal').style.display='flex';
+}
+function saveKey(){
+  var k=document.getElementById('keyInput').value.trim();
+  if(!k)return;
+  TD_KEY=k;
+  localStorage.setItem('tdApiKey',k);
+  document.getElementById('keyModal').style.display='none';
+  runAnalysis();
+}
+function clearKey(){
+  TD_KEY='';localStorage.removeItem('tdApiKey');
+  document.getElementById('keyInput').value='';
+  document.getElementById('keyStatus').textContent='Ключ не введено';
+  document.getElementById('keyStatus').style.color='var(--red)';
+}
 
-// interval map: '15m','1h','4h','1d'
-// limit: кількість свічок
-function bnFetch(symbol,interval,limit){
-  var url=BNBASE+'/fapi/v1/klines?symbol='+symbol+'&interval='+interval+'&limit='+limit;
+// ── Twelve Data API (реальний час, XAU/USD і EUR/USD підтримуються) ────────
+// Безкоштовна реєстрація: https://twelvedata.com — 800 запитів/день
+// interval: '15min','1h','4h','1day'   outputsize: кількість свічок
+
+function tdFetch(symbol,interval,outputsize){
+  var url='https://api.twelvedata.com/time_series?symbol='+encodeURIComponent(symbol)+
+    '&interval='+interval+'&outputsize='+outputsize+'&apikey='+TD_KEY+'&format=JSON';
   return fetch(url,{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw new Error('BN HTTP '+r.status);return r.json();})
-    .then(function(arr){
-      // Binance kline: [openTime, o, h, l, c, vol, closeTime, ...]
-      // Повертаємо від нового до старого (reverse)
-      var out=arr.map(function(k){
-        return{t:k[0]/1000,o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]};
+    .then(function(r){if(!r.ok)throw new Error('TD HTTP '+r.status);return r.json();})
+    .then(function(d){
+      if(d.status==='error')throw new Error('TD: '+d.message);
+      if(!d.values||!d.values.length)throw new Error('TD: no data for '+symbol);
+      // Twelve Data повертає newest-first
+      return d.values.map(function(v){
+        return{t:new Date(v.datetime).getTime()/1000,o:+v.open,h:+v.high,l:+v.low,c:+v.close,v:+(v.volume||0)};
       });
-      return out.reverse(); // newest first
     });
 }
 
-function bnQuote(symbol){
-  // 24h ticker для H/L/change + ticker price для реальної ціни
-  var p1=fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
-  var p2=fetch(BNBASE+'/fapi/v1/ticker/price?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
+function tdQuote(symbol){
+  var url='https://api.twelvedata.com/quote?symbol='+encodeURIComponent(symbol)+'&apikey='+TD_KEY;
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==='error')throw new Error('TD quote: '+d.message);
+      var price=+d.close;
+      var prev=+d.previous_close||price;
+      return{
+        price:price,
+        change:((price-prev)/prev)*100,
+        high:+d.high,low:+d.low,open:+d.open,
+        prev:prev,volume:+(d.volume||0),ts:Date.now()
+      };
+    });
+}
+
+// ── Binance Spot (для BTC/EUR fallback, немає XAU) ─────────────────────────
+var BNSPOT='https://data-api.binance.vision';
+
+function bnSpotFetch(symbol,interval,limit){
+  var url=BNSPOT+'/api/v3/klines?symbol='+symbol+'&interval='+interval+'&limit='+limit;
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('BN HTTP '+r.status);return r.json();})
+    .then(function(arr){
+      return arr.map(function(k){return{t:k[0]/1000,o:+k[1],h:+k[2],l:+k[3],c:+k[4],v:+k[5]};}).reverse();
+    });
+}
+
+function bnSpotQuote(symbol){
+  var p1=fetch(BNSPOT+'/api/v3/ticker/24hr?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
+  var p2=fetch(BNSPOT+'/api/v3/ticker/price?symbol='+symbol,{cache:'no-store'}).then(function(r){return r.json();});
   return Promise.all([p1,p2]).then(function(res){
     var t=res[0],pr=res[1];
     var price=+pr.price;
@@ -341,7 +428,25 @@ function bnQuote(symbol){
     };
   });
 }
+// ── Unified fetch: Twelve Data якщо є ключ, інакше error ──────────────────
+function fetchCandles(tdSymbol,bnSymbol,interval,size){
+  // interval: TD uses '15min','1h','4h','1day'; BN uses '15m','1h','4h','1d'
+  if(TD_KEY){
+    return tdFetch(tdSymbol,interval,size);
+  }
+  // Fallback: Binance Spot (тільки для EUR/BTC, не XAU)
+  if(bnSymbol){
+    var bnInt=interval.replace('min','m').replace('day','d');
+    return bnSpotFetch(bnSymbol,bnInt,size);
+  }
+  return Promise.reject(new Error('Немає API ключа і немає Binance fallback для '+tdSymbol));
+}
 
+function fetchQuote(tdSymbol,bnSymbol){
+  if(TD_KEY) return tdQuote(tdSymbol);
+  if(bnSymbol) return bnSpotQuote(bnSymbol);
+  return Promise.reject(new Error('Немає API ключа'));
+}
 
 
 function make4h(c1h){
@@ -484,34 +589,19 @@ function calcOrderFlow(cc){
 }
 
 // ── FUNDAMENTAL ENGINE ────────────────────────────────────────────────────
-var fundamentalData={dxy:null,spx:null,vix:null,loaded:false};
+var fundamentalData={btcChange:0,eurChange:0,vixProxy:null,loaded:false};
 
 function loadFundamentals(){
-  // Використовуємо Binance Futures:
-  // DXY proxy: USDCUSDT inverse (або просто BTCUSDT напрямок як risk)
-  // Risk proxy: BTCUSDT — зростає = risk-on
-  // VIX proxy: волатильність через ATR BTC 4h
-  return Promise.all([
-    // BTC як risk-on/off proxy (найбільший ризиковий актив)
-    fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol=BTCUSDT',{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return null;}),
-    // USDCUSDT ≈ 1 завжди, але індекс долара можна апроксимувати через EUR/USD inverse
-    // EURUSDT зміна — якщо EUR падає → DXY росте
-    fetch(BNBASE+'/fapi/v1/ticker/24hr?symbol=EURUSDT',{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return null;}),
-    // Klines BTC 4h для ATR-based VIX proxy
-    bnFetch('BTCUSDT','4h',14).catch(function(){return[];})
-  ]).then(function(res){
-    var btc24=res[0],eur24=res[1],btc4h=res[2];
-    // risk proxy: BTC зміна за 24h
-    fundamentalData.btcChange=btc24?+btc24.priceChangePercent:0;
-    // DXY proxy: -EUR зміна (якщо EUR падає → DXY росте → bear для Gold/EUR)
-    fundamentalData.eurChange=eur24?+eur24.priceChangePercent:0;
-    // VIX proxy: BTC 4h ATR як % від ціни
-    if(btc4h.length>=5){
-      var atr=calcATR(btc4h,14);
-      var btcPrice=btc4h[0]?btc4h[0].c:1;
-      fundamentalData.vixProxy=+(atr/btcPrice*100).toFixed(2); // % волатильність
-    } else {
-      fundamentalData.vixProxy=null;
+  var btcP=bnSpotQuote('BTCUSDT').catch(function(){return null;});
+  var eurP=bnSpotQuote('EURUSDT').catch(function(){return null;});
+  var btc4hP=bnSpotFetch('BTCUSDT','4h',14).catch(function(){return[];});
+  return Promise.all([btcP,eurP,btc4hP]).then(function(res){
+    if(res[0])fundamentalData.btcChange=res[0].change;
+    if(res[1])fundamentalData.eurChange=res[1].change;
+    if(res[2].length>=5){
+      var atr=calcATR(res[2],14);
+      var bp=res[2][0]?res[2][0].c:1;
+      fundamentalData.vixProxy=+(atr/bp*100).toFixed(2);
     }
     fundamentalData.loaded=true;
   });
@@ -961,30 +1051,38 @@ function fmtVol(v){if(!v)return'—';if(v>1e9)return(v/1e9).toFixed(1)+'B';if(v>
 
 function runAnalysis(){
   hideErr();
+
+  // Якщо ключа немає — показуємо модальне вікно
+  if(!TD_KEY){
+    showKeyModal();
+    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">🔑 Введіть API ключ Twelve Data для завантаження даних</div>';
+    return;
+  }
+
   document.getElementById('spin').classList.add('on');
-  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження з Binance...</div>';
+  document.getElementById('feed').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px">⏳ Завантаження з Twelve Data...</div>';
   renderEvents();
 
-  // Binance Futures:
-  // XAUUSDT = XAU/USD Gold futures
-  // EURUSDT = EUR/USD futures
-  // 15m: 96 свічок ≈ 1 день | 1h: 120 свічок ≈ 5 днів | 1d: 120 свічок ≈ 4 місяці
+  // Twelve Data symbols: 'XAU/USD', 'EUR/USD'
+  // intervals: '15min','1h','4h','1day'
   Promise.all([
     loadFundamentals(),
-    bnFetch('XAUUSDT','15m',96),
-    bnFetch('XAUUSDT','1h',120),
-    bnFetch('XAUUSDT','1d',120),
-    bnQuote('XAUUSDT'),
-    bnFetch('EURUSDT','15m',96),
-    bnFetch('EURUSDT','1h',120),
-    bnFetch('EURUSDT','1d',120),
-    bnQuote('EURUSDT')
+    fetchCandles('XAU/USD',null,'15min',96),
+    fetchCandles('XAU/USD',null,'1h',120),
+    fetchCandles('XAU/USD',null,'4h',80),
+    fetchCandles('XAU/USD',null,'1day',120),
+    fetchQuote('XAU/USD',null),
+    fetchCandles('EUR/USD','EURUSDT','15min',96),
+    fetchCandles('EUR/USD','EURUSDT','1h',120),
+    fetchCandles('EUR/USD','EURUSDT','4h',80),
+    fetchCandles('EUR/USD','EURUSDT','1day',120),
+    fetchQuote('EUR/USD','EURUSDT')
   ]).then(function(res){
-    var x15=res[1],x1h=res[2],xDay=res[3],xq=res[4];
-    var e15=res[5],e1h=res[6],eDay=res[7],eq=res[8];
-    var x4h=make4h(x1h),e4h=make4h(e1h);
+    var x15=res[1],x1h=res[2],x4h=res[3],xDay=res[4],xq=res[5];
+    var e15=res[6],e1h=res[7],e4h=res[8],eDay=res[9],eq=res[10];
+    // Twelve Data вже дає 4h свічки напряму — не треба make4h
+    // Але залишаємо make4h як fallback для сумісності якщо є тільки 1h
 
-    // Fundamental
     var fa=calcFundamentals('both');
     renderFundamentals(fa);
 
@@ -1049,19 +1147,37 @@ function runAnalysis(){
     renderZones(xa,ea,xq,eq);
 
     var now=new Date().toLocaleTimeString('uk-UA',{timeZone:'Europe/Kiev'});
-    document.getElementById('lastUpd').textContent='✅ Binance Futures · '+now+' KY · реальний час · оновлення 1хв';
+    document.getElementById('lastUpd').textContent='✅ Twelve Data · '+now+' KY · реальний час · оновлення 1хв';
+
+    // Оновлюємо статус ключа
+    var ks=document.getElementById('keyStatus');
+    if(ks){ks.textContent='✓ Ключ активний';ks.style.color='var(--green)';}
     document.getElementById('spin').classList.remove('on');
 
   }).catch(function(err){
-    showErr('Помилка Binance API: '+err.message+'. Перевірте інтернет-з\'єднання.');
-    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ Помилка завантаження з Binance</div>';
+    showErr('Помилка: '+err.message);
+    // Якщо помилка авторизації — просимо ключ
+    if(err.message&&(err.message.indexOf('401')>-1||err.message.indexOf('apikey')>-1||err.message.indexOf('invalid')>-1)){
+      TD_KEY='';localStorage.removeItem('tdApiKey');
+      showKeyModal();
+    }
+    document.getElementById('feed').innerHTML='<div style="text-align:center;padding:30px;color:var(--red);font-size:11px">❌ '+err.message+'</div>';
     document.getElementById('spin').classList.remove('on');
   });
 }
 
 runAnalysis();
-setInterval(runAnalysis,60*1000); // Binance real-time — оновлення кожну хвилину
+setInterval(runAnalysis,60*1000);
 setInterval(renderEvents,60*1000);
+
+// Показуємо збережений ключ в полі
+if(TD_KEY){
+  var ki=document.getElementById('keyInput');
+  if(ki)ki.value=TD_KEY;
+  var ks=document.getElementById('keyStatus');
+  if(ks){ks.textContent='✓ Ключ збережено';ks.style.color='var(--green)';}
+}
 </script>
+
 </body>
 </html>
